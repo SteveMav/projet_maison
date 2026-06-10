@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Logement à {{ listing.commune }} - Maison{% endblock %}
+{% block main_class %} listing-detail-page-shell{% endblock %}
+
+{% block content %}
+  <section class="detail-page-container">
+    {% include "listings/includes/detail_panel.html" %}
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script defer src="{% static 'js/listing-detail.js' %}"></script>
+  <script defer src="{% static 'js/lead-handoff.js' %}"></script>
+{% endblock %}

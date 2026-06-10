@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Listing Detail Overlay - Maison</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#18513d",
+                    "primary-container": "#276a52",
+                    "surface-bright": "#eefdf5",
+                    "inverse-surface": "#26332e",
+                    "outline": "#707973",
+                    "background": "#eefdf5",
+                    "on-secondary-container": "#763805",
+                    "tertiary-fixed": "#b5efd4",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#ace6cb",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#e2f1e9",
+                    "secondary-container": "#fda36a",
+                    "primary-fixed-dim": "#91d4b7",
+                    "on-primary-fixed-variant": "#02513b",
+                    "on-background": "#111e19",
+                    "on-primary-container": "#a4e7c9",
+                    "outline-variant": "#bfc9c2",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#321300",
+                    "surface-container-highest": "#d7e6de",
+                    "on-tertiary-fixed": "#002116",
+                    "primary-fixed": "#adf1d2",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#ceded6",
+                    "inverse-on-surface": "#e5f4ec",
+                    "secondary-fixed": "#ffdbc8",
+                    "inverse-primary": "#91d4b7",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#111e19",
+                    "secondary-fixed-dim": "#ffb68a",
+                    "tertiary-fixed-dim": "#9ad3b9",
+                    "surface-variant": "#d7e6de",
+                    "primary": "#03523b",
+                    "surface-container-high": "#ddece4",
+                    "on-secondary-fixed-variant": "#733503",
+                    "surface": "#eefdf5",
+                    "tertiary-container": "#336954",
+                    "on-primary-fixed": "#002116",
+                    "on-surface-variant": "#404944",
+                    "on-tertiary-fixed-variant": "#17503c",
+                    "surface-container-low": "#e8f7ef",
+                    "secondary": "#914c1a",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#276a52"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xxl": "64px",
+                    "xl": "40px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["Manrope"],
+                    "label-md": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "body-sm": ["Manrope"],
+                    "headline-sm": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "display-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["32px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        /* Hide scrollbar for gallery snap */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen overflow-hidden antialiased">
+<!-- Backdrop Overlay (Level 3 Overlay) -->
+<div aria-hidden="true" class="fixed inset-0 bg-on-background/40 z-40 transition-opacity duration-300"></div>
+<!-- Main Detail Panel (Level 1 Raised on Mobile, Raised Panel on Desktop) -->
+<div class="fixed inset-y-0 right-0 z-50 w-full md:w-[480px] lg:w-[540px] bg-surface-container-lowest flex flex-col shadow-[0px_4px_12px_rgba(29,42,37,0.1)] md:rounded-l-xl transition-transform duration-300 transform translate-x-0 overflow-hidden border-l border-outline-variant">
+<!-- Sticky Header Controls -->
+<div class="sticky top-0 z-10 flex justify-between items-center p-md bg-surface-container-lowest/90 backdrop-blur-sm border-b border-outline-variant/50">
+<button aria-label="Fermer" class="w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="flex gap-sm">
+<button aria-label="Partager" class="w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-variant transition-colors text-outline">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button aria-label="Favoris" class="w-10 h-10 flex items-center justify-center rounded-full bg-surface hover:bg-surface-variant transition-colors text-outline">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto pb-xxl">
+<!-- Photo Gallery (Bento-ish/Snap Grid) -->
+<div class="px-md pt-sm pb-md">
+<div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden mb-sm border border-outline-variant">
+<img alt="Main property view" class="w-full h-full object-cover" data-alt="A bright, sunlit modern house with a large lush green garden in Kinshasa. The architecture features clean lines, warm earthy tones, and large windows reflecting a clear sky. The scene is shot in a warm, inviting light-mode aesthetic, emphasizing a grounded, professional, yet welcoming atmosphere typical of high-end local real estate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJDADXzmkidZgIdrWnXpj2L1ViiV2pg5zECg9qx0Y4ls8YmrKBYXgCBl667sTNFvZW9QRiDiPrTYkFLKtJ76OkhbVn97ot2m9SIuiQ_oKk-b-WpkXCgc1By5X3f7z8s3TOMdtORKxEKzs8gSsAqz6bnG8QbDIY0znscsOas7HlSUqk6lypxj08y_CGsVfu_q0AWdVp4CH92UrqeNlkseiTJxdOogM8obzEe2h5AsDiv01JneCyf0SHYsi93cOftuTlyr1h4NVJJo5d"/>
+<div class="absolute bottom-sm right-sm bg-inverse-surface/80 text-inverse-on-surface px-sm py-xs rounded font-label-sm text-label-sm backdrop-blur">
+                        1/8
+                    </div>
+</div>
+<div class="flex gap-sm overflow-x-auto snap-x no-scrollbar">
+<div class="w-24 h-24 flex-shrink-0 snap-start rounded-lg overflow-hidden border border-outline-variant">
+<img alt="Interior living room" class="w-full h-full object-cover" data-alt="A modern living room with warm light filtering through large windows, featuring contemporary furniture and a neutral earthy palette. The space feels substantial and permanent." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHBuHC5s2hcHUJ2mKLT9cGEXcYAagOPD3YGMWFdxWRsy5DzR1SoCttC8ZP0Hus_EuxDZNSS2vP0KzAHvwv4kHHvyi5gMj19omWY2otlT2n8UiZs6XMw7D43ZDPqJcgBibuW4zJ2uaA5ZmXhjwKr-8k2ytry71TEUG1U79aQkEdQCjd9eeSKkrcyYye5BeZVGX543VsQ58NuCRx5u6iUQ9tOmaP-bM9-wLz4VAIVSgVel1_Cq3xfR1SjTgto01CNjKYIyvKj_q58Ko_"/>
+</div>
+<div class="w-24 h-24 flex-shrink-0 snap-start rounded-lg overflow-hidden border border-outline-variant">
+<img alt="Kitchen area" class="w-full h-full object-cover" data-alt="A clean, modern kitchen with wooden cabinets and bright white countertops. The lighting is warm and natural, emphasizing a practical yet elegant design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtKlPiePN37VyhNM00uVkkgTdnTqsuXsG4Qq2QbvSIYusRaUU-CUT-ru0HvDgqxF54JybiuuprDeytysMIzTwHahm536ow97rNkkDWx-NsUO_OhmMRUPnUAGuJzcL5GXmAn559ICBzT6t9AokG8oWqyfiHvTDwRH1GdBYig48ZW56nNDcQASLELDM8_e7HZxjJM1HHElJHpZnvLPJTt9bNPfZadjQuzy2aw-2Qb3PJ4h2x5aHKkBoyVUd4Cwav3sAeF1ypMmaVrbXe"/>
+</div>
+<div class="w-24 h-24 flex-shrink-0 snap-start rounded-lg overflow-hidden border border-outline-variant">
+<img alt="Bedroom" class="w-full h-full object-cover" data-alt="A serene bedroom with soft natural lighting, a comfortable bed, and warm wooden accents. The atmosphere is calm and inviting, typical of a reliable neighborhood home." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx7w_cUsgHyh5Wqdqtd9HVqqLPIcDGnu6OimTH9RfOthMbRLFNXqfZEIrC01RmD5rGA76CRfVl91XLlw1IrzTBXQScnYCXqKi7HcegJycNwxwPJuU9kzIv7LQr3GZl2Vf2S_hftnIpgv7NKyD1zbla1RFkr1fwHOwkALD5EJ6XOV6YmILExzCIglR2XL5MCNtmr3XF0ifB2KJ-yBMw2-Tu925bFnzqKKHt5Lo4VQIIgE3KIbd7lqM2MbpfN08W7rRRAtSYXCJMemXt"/>
+</div>
+</div>
+</div>
+<!-- Primary Info -->
+<div class="px-md py-sm">
+<div class="flex items-center gap-xs text-on-surface-variant font-label-md text-label-md mb-xs">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                    Ngaliema · Ma Campagne
+                </div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-sm">Maison calme avec jardin arboré</h1>
+<div class="font-headline-md text-headline-md text-primary-container mb-md">
+                    $1,350<span class="font-body-md text-body-md text-on-surface-variant">/mois</span>
+</div>
+<!-- Specs Chips -->
+<div class="flex flex-wrap gap-sm mb-lg">
+<div class="flex items-center gap-xs bg-surface-container px-sm py-xs rounded-lg font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px]">bed</span> 3 chambres
+                    </div>
+<div class="flex items-center gap-xs bg-surface-container px-sm py-xs rounded-lg font-label-sm text-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px]">shower</span> 2 sdb
+                    </div>
+<div class="flex items-center gap-xs text-on-surface-variant font-label-sm text-label-sm ml-auto">
+<span class="material-symbols-outlined text-[16px]">visibility</span> 124 vues
+                    </div>
+</div>
+</div>
+<!-- Trust Element: Verified Badge -->
+<div class="mx-md mb-lg p-md bg-[#eefdf5] border border-[#b5efd4] rounded-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<div>
+<h3 class="font-label-md text-label-md text-primary-container mb-xs">Annonce vérifiée</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Notre équipe a effectué un contrôle sélectif de cette propriété pour garantir sa disponibilité et l'exactitude des informations.
+                    </p>
+</div>
+</div>
+<!-- Description -->
+<div class="px-md mb-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-sm">Description</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Située dans le quartier prisé de Ma Campagne, cette maison offre un cadre de vie paisible. Le grand jardin arboré est parfait pour les familles. La propriété dispose d'un vaste salon lumineux, d'une cuisine équipée et de trois chambres spacieuses. Sécurité 24/7 avec guérite.
+                </p>
+</div>
+<!-- Commissionnaire / Agent Info -->
+<div class="px-md mb-xl">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-sm">Commissionnaire</h2>
+<div class="flex items-center gap-md p-md border border-outline-variant rounded-lg bg-surface">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">person</span>
+</div>
+<div class="flex-1">
+<div class="font-label-md text-label-md text-on-surface">Patrick Ilunga</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                            Contact WhatsApp transmis après identification légère
+                        </div>
+</div>
+</div>
+</div>
+<!-- Report Action -->
+<div class="px-md pb-md flex justify-center border-t border-outline-variant pt-lg mt-lg">
+<button class="flex items-center gap-xs font-label-md text-label-md text-error hover:underline transition-all">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+                    Signaler cette annonce
+                </button>
+</div>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="sticky bottom-0 w-full p-md bg-surface-container-lowest border-t border-outline-variant shadow-[0px_-4px_12px_rgba(29,42,37,0.02)]">
+<button class="w-full flex items-center justify-center gap-sm bg-primary-container text-on-primary py-[12px] px-lg rounded-[10px] font-label-md text-label-md hover:bg-tertiary transition-colors shadow-sm">
+<span class="material-symbols-outlined">chat</span>
+                Contacter sur WhatsApp
+            </button>
+</div>
+</div>
+</body></html>

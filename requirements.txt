@@ -1,0 +1,4 @@
+Django==5.2.14
+django-allauth[socialaccount]==65.18.0
+phonenumbers==9.0.32
+Pillow==12.2.0

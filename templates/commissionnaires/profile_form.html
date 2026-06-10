@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Maison{% endblock %}
+
+{% block content %}
+  <section class="surface-panel pro-panel">
+    <p class="eyebrow">Espace pro</p>
+    <h1>{{ title }}</h1>
+    <form class="auth-form" method="post" novalidate>
+      {% csrf_token %}
+      <div class="field">
+        <label for="{{ form.display_name.id_for_label }}">{{ form.display_name.label }}</label>
+        {{ form.display_name }}
+        <p class="field-help" id="display-name-help">Ce nom apparaitra sur vos futures annonces.</p>
+        {% if form.display_name.errors %}
+          <p class="field-error" id="display-name-error">{{ form.display_name.errors|join:" " }}</p>
+        {% endif %}
+      </div>
+      <div class="field">
+        <label for="{{ form.whatsapp_phone.id_for_label }}">{{ form.whatsapp_phone.label }}</label>
+        {{ form.whatsapp_phone }}
+        <p class="field-help" id="whatsapp-phone-help">Maison utilise ce numero pour les contacts lies a vos annonces.</p>
+        {% if form.whatsapp_phone.errors %}
+          <p class="field-error" id="whatsapp-phone-error">{{ form.whatsapp_phone.errors|join:" " }}</p>
+        {% endif %}
+      </div>
+      <button class="button button-primary button-full" type="submit">{{ submit_label }}</button>
+    </form>
+  </section>
+{% endblock %}

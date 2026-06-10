@@ -1,0 +1,21 @@
+<div class="availability-block">
+  <div class="availability-status-row">
+    {% if listing.availability_status == "available" %}
+      <span class="availability-status status-available">
+        <span class="status-indicator" aria-hidden="true"></span>
+        Disponible
+      </span>
+      <span class="availability-freshness">
+        Mis à jour le {{ listing.availability_reconfirmed_at|date:"d/m/Y" }}
+      </span>
+    {% elif listing.availability_status == "unavailable" %}
+      <span class="availability-status status-unavailable">
+        <span class="status-indicator" aria-hidden="true"></span>
+        Indisponible
+      </span>
+      <span class="availability-freshness">
+        Mis à jour le {{ listing.availability_changed_at|date:"d/m/Y" }}
+      </span>
+    {% endif %}
+  </div>
+</div>

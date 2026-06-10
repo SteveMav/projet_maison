@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Maison - Explorer{% endblock %}
+
+{% block content %}
+  <section class="surface-panel">
+    <p class="eyebrow">Location a Kinshasa</p>
+    <h1>Explorer les annonces Maison</h1>
+    <p class="lede">
+      Les surfaces publiques restent ouvertes. Les actions de compte et les espaces
+      operationnels demandent une connexion.
+    </p>
+    <div class="action-row">
+      <a class="button button-primary" href="{% url 'accounts:register' %}">Creer un compte</a>
+      <a class="button button-secondary" href="{% url 'accounts:login' %}">Se connecter</a>
+    </div>
+  </section>
+{% endblock %}

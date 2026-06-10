@@ -1,0 +1,43 @@
+<div class="listing-gallery" data-gallery>
+  <div class="gallery-main-wrapper">
+    {% if main_photo %}
+      <img
+        class="gallery-main-image"
+        src="{{ main_photo.image.url }}"
+        alt="{% if main_photo.alt_text %}{{ main_photo.alt_text }}{% else %}Logement à {{ listing.commune }} - {{ listing.bedroom_count }} chambres{% endif %}"
+        data-gallery-main
+        width="640"
+        height="480"
+      >
+    {% else %}
+      <div class="gallery-placeholder" role="img" aria-label="Photo non disponible">
+        Photo non disponible
+      </div>
+    {% endif %}
+    {% if photos_count > 0 %}
+      <span class="gallery-count" data-gallery-count>1/{{ photos_count }}</span>
+    {% endif %}
+  </div>
+  {% if photos_count > 1 %}
+    <div class="gallery-thumbnails" role="list">
+      {% for photo in photos %}
+        <button
+          type="button"
+          class="gallery-thumbnail-button{% if forloop.first %} active{% endif %}"
+          data-gallery-thumb
+          data-src="{{ photo.image.url }}"
+          data-alt="{% if photo.alt_text %}{{ photo.alt_text }}{% else %}Logement à {{ listing.commune }} - {{ listing.bedroom_count }} chambres - Photo {{ forloop.counter }}{% endif %}"
+          data-index="{{ forloop.counter }}"
+          aria-label="Afficher la photo {{ forloop.counter }} de {{ photos_count }}"
+        >
+          <img
+            class="gallery-thumbnail-image"
+            src="{{ photo.image.url }}"
+            alt=""
+            loading="lazy"
+          >
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

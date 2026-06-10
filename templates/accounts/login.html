@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Se connecter - Maison{% endblock %}
+
+{% block content %}
+  <section class="auth-panel">
+    <div class="auth-copy">
+      <p class="eyebrow">Acces protege</p>
+      <h1>Se connecter</h1>
+      <p class="lede">Connectez-vous pour continuer vers votre espace Maison.</p>
+    </div>
+    <div class="auth-stack">
+      {% include "accounts/includes/google_signin.html" %}
+    <form class="auth-form" method="post" novalidate>
+      {% csrf_token %}
+      {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+      {% endif %}
+      {% include "accounts/includes/auth_form_errors.html" %}
+      <div class="field">
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
+        {% for error in form.username.errors %}
+          <p class="field-error" role="alert">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <div class="field">
+        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+        {{ form.password }}
+        {% for error in form.password.errors %}
+          <p class="field-error" role="alert">{{ error }}</p>
+        {% endfor %}
+      </div>
+      <button class="button button-primary" type="submit">Se connecter</button>
+    </form>
+    </div>
+  </section>
+{% endblock %}

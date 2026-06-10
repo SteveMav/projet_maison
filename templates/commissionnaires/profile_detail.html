@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Profil commissionnaire - Maison{% endblock %}
+
+{% block content %}
+  <section class="surface-panel pro-panel">
+    <p class="eyebrow">Espace pro</p>
+    <h1>Profil commissionnaire</h1>
+    <dl class="profile-summary">
+      <div>
+        <dt>Nom affiche</dt>
+        <dd>{{ profile.display_name }}</dd>
+      </div>
+      <div>
+        <dt>Numero WhatsApp professionnel</dt>
+        <dd>{{ profile.whatsapp_phone }}</dd>
+      </div>
+    </dl>
+    <div class="action-row">
+      <a class="button button-primary" href="{% url 'commissionnaires:profile_edit' profile.pk %}">Modifier</a>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{
+  "name": "maison",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "css:build": "tailwindcss -i ./static_src/css/input.css -o ./static/css/app.css --minify",
+    "css:watch": "tailwindcss -i ./static_src/css/input.css -o ./static/css/app.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.0",
+    "tailwindcss": "4.3.0"
+  }
+}

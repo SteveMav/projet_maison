@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Publier un bien - Maison{% endblock %}
+
+{% block content %}
+  <style>
+    .stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--maison-space-4);
+      margin-bottom: var(--maison-space-6);
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: var(--maison-space-2);
+    }
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--maison-radius-full);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .step-active .step-number {
+      background: var(--maison-accent);
+      color: var(--maison-inverse-ink);
+    }
+    .step-active .step-label {
+      font-weight: 700;
+      color: var(--maison-accent);
+    }
+    .step-inactive .step-number {
+      background: var(--maison-surface-soft);
+      color: var(--maison-ink-secondary);
+      border: 1px solid var(--maison-border-strong);
+    }
+    .step-inactive .step-label {
+      color: var(--maison-ink-secondary);
+    }
+    .step-divider {
+      flex: 0 0 40px;
+      height: 1px;
+      background: var(--maison-border-hairline);
+    }
+    .preview-card-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--maison-space-5);
+    }
+    .photo-thumbnail {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: var(--maison-radius-sm);
+      border: 1px solid var(--maison-border-strong);
+    }
+    .thumbnails-grid {
+      display: flex;
+      gap: var(--maison-space-2);
+      margin-top: var(--maison-space-2);
+      flex-wrap: wrap;
+    }
+    .description-preview {
+      background: var(--maison-surface-raised);
+      border: 1px solid var(--maison-border-strong);
+      border-radius: var(--maison-radius-sm);
+      padding: var(--maison-space-4);
+      margin-bottom: var(--maison-space-5);
+    }
+  </style>
+
+  <section class="surface-panel pro-panel max-w-[700px] mx-auto">
+    <p class="eyebrow">Espace pro</p>
+    <h1>Publier un bien</h1>
+
+    <div class="stepper">
+      <div class="step {% if state == 'entry' %}step-active{% else %}step-inactive{% endif %}">
+        <span class="step-number">1</span>
+        <span class="step-label">Saisie</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step {% if state == 'preview' %}step-active{% else %}step-inactive{% endif %}">
+        <span class="step-number">2</span>
+        <span class="step-label">Aperçu</span>
+      </div>
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="form-errors message-list">
+        {% for error in form.non_field_errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if state == 'entry' %}
+      <form class="auth-form" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        
+        <div class="field">
+          <label for="{{ form.monthly_price_amount.id_for_label }}">{{ form.monthly_price_amount.label }}</label>
+          {{ form.monthly_price_amount }}
+          <p class="field-help" id="price-help">Indiquez le montant en dollars américains (USD) par mois.</p>
+          {% if form.monthly_price_amount.errors %}
+            <p class="field-error" id="price-error">{{ form.monthly_price_amount.errors|join:" " }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.commune.id_for_label }}">{{ form.commune.label }}</label>
+          {{ form.commune }}
+          <p class="field-help" id="commune-help">Exemple : Gombe, Ngaliema, Kintambo...</p>
+          {% if form.commune.errors %}
+            <p class="field-error" id="commune-error">{{ form.commune.errors|join:" " }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.bedroom_count.id_for_label }}">{{ form.bedroom_count.label }}</label>
+          {{ form.bedroom_count }}
+          <p class="field-help" id="bedrooms-help">Nombre de chambres à coucher disponibles.</p>
+          {% if form.bedroom_count.errors %}
+            <p class="field-error" id="bedrooms-error">{{ form.bedroom_count.errors|join:" " }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+          {{ form.description }}
+          <p class="field-help" id="description-help">Décrivez le logement en quelques phrases (atouts, commodités, etc.).</p>
+          {% if form.description.errors %}
+            <p class="field-error" id="description-error">{{ form.description.errors|join:" " }}</p>
+          {% endif %}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.photos.id_for_label }}">{{ form.photos.label }}</label>
+          {{ form.photos }}
+          
+          {% if draft and draft.photos %}
+            <div class="message mt-2 text-sm">
+              <p><strong>Photos actuellement enregistrées en brouillon :</strong></p>
+              <div class="thumbnails-grid">
+                {% for photo_path in draft.photos %}
+                  <img src="{{ MEDIA_URL }}{{ photo_path }}" alt="Brouillon photo" class="photo-thumbnail">
+                {% endfor %}
+              </div>
+              <p class="mt-2 text-secondary">Si vous souhaitez changer les photos, veuillez sélectionner au moins 3 nouvelles photos ci-dessus.</p>
+            </div>
+          {% else %}
+            <p class="field-help" id="photos-help">Ajoutez au moins 3 photos réelles et de bonne qualité du logement. Les rendus 3D ou images générées par IA sont strictement interdits.</p>
+          {% endif %}
+
+          {% if form.photos.errors %}
+            <p class="field-error" id="photos-error">{{ form.photos.errors|join:" " }}</p>
+          {% endif %}
+        </div>
+
+        <button class="button button-primary button-full min-h-[48px] mt-4" type="submit" name="action" value="preview">
+          Continuer vers l'aperçu
+        </button>
+      </form>
+
+    {% elif state == 'preview' %}
+      <div class="message-list mb-6">
+        <div class="message text-center">
+          <p><strong>Vérifiez les informations avant l'envoi.</strong> Voici comment votre annonce apparaîtra dans le catalogue public.</p>
+        </div>
+      </div>
+
+      <div class="preview-card-container">
+        {% include "listings/includes/listing_card.html" with listing=listing is_preview=True %}
+      </div>
+
+      <div class="description-preview">
+        <h3 class="font-semibold mb-2">Description complète</h3>
+        <p class="whitespace-pre-line">{{ listing.description }}</p>
+      </div>
+
+      <div class="auth-stack">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <button class="button button-secondary button-full min-h-[48px]" type="submit" name="action" value="edit">
+            Modifier l'annonce
+          </button>
+        </form>
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <button class="button button-primary button-full min-h-[48px] mt-2" type="submit" name="action" value="submit">
+            Confirmer et envoyer pour modération
+          </button>
+        </form>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

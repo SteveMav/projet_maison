@@ -1,0 +1,96 @@
+<dialog id="identification-modal" class="identification-modal" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modal-title" class="modal-title">Identification rapide</h3>
+      <button type="button" class="modal-close-btn" data-close-modal aria-label="Fermer le dialogue">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-explanation">
+        Ces informations sont utilisées pour vous mettre en relation avec le Commissionnaire et attribuer votre demande.
+      </p>
+      
+      <form id="identification-form" method="POST" action="{% url 'accounts:identify' %}" novalidate>
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="id_first_name" class="form-label">Prénom</label>
+          <input 
+            type="text" 
+            name="first_name" 
+            id="id_first_name" 
+            class="form-input" 
+            required 
+            autocomplete="given-name"
+            aria-describedby="error-first_name"
+          >
+          <span class="error-msg" id="error-first_name" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="id_last_name" class="form-label">Nom de famille</label>
+          <input 
+            type="text" 
+            name="last_name" 
+            id="id_last_name" 
+            class="form-input" 
+            required 
+            autocomplete="family-name"
+            aria-describedby="error-last_name"
+          >
+          <span class="error-msg" id="error-last_name" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="id_whatsapp_phone" class="form-label">Numéro WhatsApp</label>
+          <input 
+            type="tel" 
+            name="whatsapp_phone" 
+            id="id_whatsapp_phone" 
+            class="form-input" 
+            required 
+            autocomplete="tel"
+            inputmode="tel"
+            placeholder="Exemple : +243..."
+            aria-describedby="error-whatsapp_phone"
+          >
+          <span class="error-msg" id="error-whatsapp_phone" role="alert"></span>
+        </div>
+
+        <div class="form-group-checkbox">
+          <div class="checkbox-wrapper">
+            <input 
+              type="checkbox" 
+              name="consent" 
+              id="id_consent" 
+              class="form-checkbox" 
+              required
+              aria-describedby="error-consent"
+            >
+            <label for="id_consent" class="checkbox-label">
+              J'accepte de partager mes coordonnées avec le Commissionnaire.
+            </label>
+          </div>
+          <span class="error-msg" id="error-consent" role="alert"></span>
+        </div>
+
+        <div class="privacy-reassurance">
+          <span class="lock-icon" aria-hidden="true">🔒</span>
+          Maison ne lit pas vos conversations WhatsApp.
+        </div>
+
+        <div id="handoff-error-modal" class="handoff-error-container" role="alert" aria-live="polite" style="display: none; margin-top: 1rem; margin-bottom: 1rem; padding: 0.75rem; border-radius: 4px; background-color: #fdf2f2; border: 1px solid #f8b4b4; color: #9b1c1c;">
+          <span class="error-icon" aria-hidden="true" style="margin-right: 0.25rem;">⚠️</span>
+          <span class="error-text" style="font-weight: 500;"></span>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="button button-primary button-full modal-submit-btn">
+            Continuer vers WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</dialog>

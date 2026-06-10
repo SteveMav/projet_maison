@@ -1,0 +1,65 @@
+<article class="detail-panel" data-detail-panel data-listing-id="{{ listing.id }}">
+  <header class="detail-header">
+    {% if from_url %}
+      <a href="{{ from_url }}" class="detail-back-link" aria-label="Retour aux résultats">
+        <span aria-hidden="true">←</span> Retour aux résultats
+      </a>
+    {% else %}
+      <a href="{% url 'listings:browse' %}" class="detail-back-link" aria-label="Retour aux résultats">
+        <span aria-hidden="true">←</span> Retour aux résultats
+      </a>
+    {% endif %}
+    
+    <button type="button" class="detail-close-btn" data-close-drawer aria-label="Fermer">
+      <span aria-hidden="true">×</span>
+    </button>
+  </header>
+
+  <div class="detail-content-scroll">
+    {% if listing.availability_status == "unavailable" %}
+      <div class="unavailable-banner" role="alert">
+        <p class="unavailable-message">Cette annonce n'est plus disponible.</p>
+        {% if from_url %}
+          <a href="{{ from_url }}" class="button button-secondary button-full">Voir d'autres annonces</a>
+        {% else %}
+          <a href="{% url 'listings:browse' %}" class="button button-secondary button-full">Voir d'autres annonces</a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% include "listings/includes/gallery.html" %}
+
+    <div class="detail-body">
+      <div class="detail-facts">
+        <p class="detail-price">{{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }} / mois</p>
+        <h2 class="detail-title">Logement à {{ listing.commune }}</h2>
+        <div class="detail-meta">
+          <span class="detail-beds">{{ listing.bedroom_count }} chambres</span>
+        </div>
+      </div>
+
+      {% include "listings/includes/availability_block.html" %}
+
+      {% if listing.is_verified %}
+        <div class="verification-box" role="note">
+          <p class="verification-text">
+            <span class="verification-icon" aria-hidden="true">✓</span>
+            Cette annonce a passé un contrôle supplémentaire. Le badge ne garantit pas le résultat d'une transaction hors ligne.
+          </p>
+        </div>
+      {% endif %}
+
+      <div class="detail-description">
+        <h3 class="description-title">Description</h3>
+        <p class="description-text">{{ listing.description|linebreaksbr }}</p>
+      </div>
+
+      {% include "listings/includes/commissionnaire_block.html" %}
+
+      {% include "listings/includes/report_action.html" %}
+    </div>
+  </div>
+
+  {% include "listings/includes/contact_cta.html" %}
+  {% include "listings/includes/identification_modal.html" %}
+</article>

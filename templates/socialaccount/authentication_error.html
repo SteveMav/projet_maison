@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion Google indisponible - Maison{% endblock %}
+
+{% block content %}
+  <section class="surface-panel" role="alert">
+    <p class="eyebrow">Connexion Google</p>
+    <h1>Connexion indisponible</h1>
+    <p class="lede">Nous n'avons pas pu terminer la connexion Google. Reessayez ou utiliser votre adresse e-mail.</p>
+    <div class="action-row">
+      <a class="button button-primary" href="{% url 'accounts:login' %}">Utiliser votre adresse e-mail</a>
+      <a class="button button-secondary" href="{% url 'accounts:register' %}">Creer un compte</a>
+    </div>
+  </section>
+{% endblock %}

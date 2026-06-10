@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Numero WhatsApp - Maison{% endblock %}
+
+{% block content %}
+  <section class="auth-panel">
+    <div class="auth-copy">
+      <p class="eyebrow">Action WhatsApp</p>
+      <h1>Completez votre numero WhatsApp</h1>
+      <p class="lede">Maison utilise ce numero pour les actions qui passent par WhatsApp.</p>
+      <p class="lede">Maison ne lit pas vos conversations WhatsApp.</p>
+    </div>
+    <div class="auth-stack">
+      <form class="auth-form" method="post" novalidate>
+        {% csrf_token %}
+        {% if next %}
+          <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+        {% if form.errors %}
+          <div class="form-errors" role="alert" id="phone-form-errors">
+            <p>Verifiez le numero WhatsApp avant de continuer.</p>
+          </div>
+        {% endif %}
+        <div class="field">
+          <label for="{{ form.whatsapp_phone.id_for_label }}">{{ form.whatsapp_phone.label }}</label>
+          <p id="whatsapp-phone-help" class="field-help">Exemple : +243...</p>
+          {{ form.whatsapp_phone }}
+          {% for error in form.whatsapp_phone.errors %}
+            <p class="field-error" id="whatsapp-phone-error" role="alert">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <button class="button button-primary" type="submit">Enregistrer le numero</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

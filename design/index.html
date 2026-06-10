@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Maison, proposition visuelle pour une marketplace de locations à Kinshasa."
+    />
+    <title>Maison | Locations à Kinshasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+        <path d="m15 18-6-6 6-6" />
+      </symbol>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+      <symbol id="icon-bed" viewBox="0 0 24 24">
+        <path d="M4 18v-6m16 6v-6M4 15h16M7 12V8h4a3 3 0 0 1 3 3v1m0 0V9h3a3 3 0 0 1 3 3" />
+      </symbol>
+      <symbol id="icon-building" viewBox="0 0 24 24">
+        <path d="M5 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M3 21h18M9 7h3m-3 4h3m-3 4h3m7 6v-9h-4" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m6 12 4 4 8-8" />
+      </symbol>
+      <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+        <path d="m7 9 5 5 5-5" />
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8" />
+        <path d="M12 8v4l3 2" />
+      </symbol>
+      <symbol id="icon-filter" viewBox="0 0 24 24">
+        <path d="M4 6h16M7 12h10m-7 6h4" />
+      </symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24">
+        <path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 0 1 8.8-1.9 4.6 4.6 0 0 1 8.8 1.9Z" />
+      </symbol>
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="m4 11 8-7 8 7v9H4Zm5 9v-6h6v6" />
+      </symbol>
+      <symbol id="icon-location" viewBox="0 0 24 24">
+        <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+        <circle cx="12" cy="10" r="2" />
+      </symbol>
+      <symbol id="icon-menu" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24">
+        <path d="M5 18.5 3.8 21l3.7-1A8.6 8.6 0 1 0 5 18.5Z" />
+        <path d="M8.5 10.5c1.2 2 2 2.8 4 4m-4.4-4.7.8-.8c.3-.3.8-.2 1 .1l.8 1.3c.2.3.1.7-.1.9l-.5.5m2.7 2.7.5-.5c.2-.2.6-.3.9-.1l1.3.8c.3.2.4.7.1 1l-.8.8" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14m-7-7h14" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="6" />
+        <path d="m16 16 4 4" />
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 21s7-3.4 7-9.3V5.8L12 3 5 5.8v5.9C5 17.6 12 21 12 21Z" />
+        <path d="m9 12 2 2 4-4" />
+      </symbol>
+      <symbol id="icon-sliders" viewBox="0 0 24 24">
+        <path d="M4 7h10m4 0h2M4 12h3m4 0h9M4 17h10m4 0h2" />
+        <circle cx="16" cy="7" r="2" />
+        <circle cx="9" cy="12" r="2" />
+        <circle cx="16" cy="17" r="2" />
+      </symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="3" />
+        <path d="M5 20a7 7 0 0 1 14 0" />
+      </symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </symbol>
+    </svg>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#" data-view-target="tenant" aria-label="Maison, accueil">
+          <span class="brand-mark">M</span>
+          <span class="brand-name">maison</span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Navigation principale">
+          <button class="nav-link is-active" type="button" data-view-target="tenant">Louer</button>
+          <button class="nav-link" type="button" data-toast="Les favoris seront disponibles à la prochaine étape.">Favoris</button>
+          <button class="nav-link" type="button" data-toast="Le guide quartier arrive bientôt.">Explorer Kinshasa</button>
+        </nav>
+
+        <div class="header-actions">
+          <button class="nav-link pro-trigger" type="button" data-view-target="pro">Espace pro</button>
+          <button class="button button-primary header-publish" type="button" data-view-target="pro">
+            <svg class="icon"><use href="#icon-plus"></use></svg>
+            <span>Publier un bien</span>
+          </button>
+          <button class="icon-button mobile-menu" type="button" aria-label="Ouvrir le menu" data-toast="Menu mobile">
+            <svg class="icon"><use href="#icon-menu"></use></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="tenant-view" class="view is-visible" aria-labelledby="tenant-title">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Locations vérifiables à Kinshasa</p>
+            <h1 id="tenant-title">Votre prochain chez-vous, sans perdre vos journées.</h1>
+            <p class="hero-text">
+              Comparez des annonces claires, vérifiez leur fraîcheur et contactez le bon
+              commissionnaire sur WhatsApp.
+            </p>
+
+            <form class="search-bar" id="search-form">
+              <label class="search-field search-field-location">
+                <span class="field-label">Où cherchez-vous ?</span>
+                <span class="field-control">
+                  <svg class="icon"><use href="#icon-location"></use></svg>
+                  <select id="commune-filter" aria-label="Choisir une commune">
+                    <option value="">Toutes les communes</option>
+                    <option value="Gombe">Gombe</option>
+                    <option value="Ngaliema">Ngaliema</option>
+                    <option value="Limete">Limete</option>
+                    <option value="Kintambo">Kintambo</option>
+                    <option value="Lemba">Lemba</option>
+                    <option value="Bandalungwa">Bandalungwa</option>
+                  </select>
+                </span>
+              </label>
+              <label class="search-field">
+                <span class="field-label">Budget maximum</span>
+                <span class="field-control">
+                  <span class="currency">$</span>
+                  <select id="budget-filter" aria-label="Choisir un budget maximum">
+                    <option value="">Sans limite</option>
+                    <option value="500">500 / mois</option>
+                    <option value="800">800 / mois</option>
+                    <option value="1200">1 200 / mois</option>
+                    <option value="1800">1 800 / mois</option>
+                  </select>
+                </span>
+              </label>
+              <label class="search-field">
+                <span class="field-label">Chambres</span>
+                <span class="field-control">
+                  <svg class="icon"><use href="#icon-bed"></use></svg>
+                  <select id="bedroom-filter" aria-label="Choisir le nombre de chambres">
+                    <option value="">Toutes</option>
+                    <option value="1">1 et plus</option>
+                    <option value="2">2 et plus</option>
+                    <option value="3">3 et plus</option>
+                    <option value="4">4 et plus</option>
+                  </select>
+                </span>
+              </label>
+              <button class="button button-primary search-submit" type="submit">
+                <svg class="icon"><use href="#icon-search"></use></svg>
+                <span>Rechercher</span>
+              </button>
+            </form>
+
+            <div class="hero-meta">
+              <div class="avatar-stack" aria-hidden="true">
+                <span>A</span>
+                <span>P</span>
+                <span>M</span>
+              </div>
+              <p><strong>48 nouvelles annonces</strong> vérifiées ou mises à jour cette semaine.</p>
+            </div>
+          </div>
+
+          <aside class="hero-visual" aria-label="Annonce mise en avant">
+            <img
+              src="https://images.pexels.com/photos/1642125/pexels-photo-1642125.jpeg?auto=compress&cs=tinysrgb&w=1100"
+              alt="Façade lumineuse d'une maison moderne"
+            />
+            <div class="hero-visual-top">
+              <span class="verified-badge">
+                <svg class="icon"><use href="#icon-shield"></use></svg>
+                Annonce vérifiée
+              </span>
+            </div>
+            <div class="hero-property">
+              <div>
+                <p class="property-location">Ngaliema · Ma Campagne</p>
+                <h2>Maison calme avec jardin arboré</h2>
+                <p class="property-facts">3 chambres · Mise à jour hier</p>
+              </div>
+              <strong>$1 350<span>/mois</span></strong>
+            </div>
+          </aside>
+        </div>
+
+        <div class="shell trust-strip" aria-label="Engagements Maison">
+          <article>
+            <svg class="icon"><use href="#icon-shield"></use></svg>
+            <div>
+              <h2>Vérification sélective</h2>
+              <p>Le badge apparaît seulement après contrôle.</p>
+            </div>
+          </article>
+          <article>
+            <svg class="icon"><use href="#icon-clock"></use></svg>
+            <div>
+              <h2>Fraîcheur visible</h2>
+              <p>Chaque annonce affiche sa dernière mise à jour.</p>
+            </div>
+          </article>
+          <article>
+            <svg class="icon"><use href="#icon-message"></use></svg>
+            <div>
+              <h2>Contact direct</h2>
+              <p>Continuez simplement sur WhatsApp.</p>
+            </div>
+          </article>
+        </div>
+
+        <section class="shell listings-section" aria-labelledby="listings-title">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">À découvrir maintenant</p>
+              <h2 id="listings-title">Locations récemment mises à jour</h2>
+            </div>
+            <div class="section-controls">
+              <button class="button button-secondary" id="filter-button" type="button" aria-expanded="false">
+                <svg class="icon"><use href="#icon-sliders"></use></svg>
+                Filtres
+              </button>
+              <button class="sort-control" type="button" data-toast="Tri actuel : annonces les plus récentes.">
+                Plus récentes
+                <svg class="icon"><use href="#icon-chevron-down"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-panel" id="filter-panel" hidden>
+            <div>
+              <p class="field-label">Communes populaires</p>
+              <div class="chip-row" id="commune-chips">
+                <button class="filter-chip" type="button" data-commune="Gombe">Gombe</button>
+                <button class="filter-chip" type="button" data-commune="Ngaliema">Ngaliema</button>
+                <button class="filter-chip" type="button" data-commune="Limete">Limete</button>
+                <button class="filter-chip" type="button" data-commune="Kintambo">Kintambo</button>
+                <button class="filter-chip" type="button" data-commune="Lemba">Lemba</button>
+              </div>
+            </div>
+            <button class="text-button" type="button" id="reset-filters">Effacer les filtres</button>
+          </div>
+
+          <div class="results-summary">
+            <p id="result-count" aria-live="polite">6 biens disponibles</p>
+            <div class="active-filters" id="active-filters" aria-label="Filtres actifs"></div>
+          </div>
+
+          <div class="listing-grid" id="listing-grid" aria-live="polite"></div>
+
+          <div class="empty-state" id="empty-state" hidden>
+            <span class="empty-icon"><svg class="icon"><use href="#icon-search"></use></svg></span>
+            <h3>Aucune annonce ne correspond exactement.</h3>
+            <p>Essayez une autre commune ou augmentez légèrement votre budget.</p>
+            <button class="button button-primary" type="button" id="empty-reset">Voir toutes les annonces</button>
+          </div>
+        </section>
+
+        <section class="shell confidence-section" aria-labelledby="confidence-title">
+          <div class="confidence-copy">
+            <p class="eyebrow">Une confiance concrète</p>
+            <h2 id="confidence-title">Cherchez vite, sans croire sur parole.</h2>
+            <p>
+              Maison montre ce qui a réellement été contrôlé. Une annonce publiée respecte
+              notre standard. Une annonce vérifiée a passé une étape de contrôle supplémentaire.
+            </p>
+            <button class="text-link" type="button" data-toast="Le détail du processus de vérification sera publié avec le lancement.">
+              Comprendre le badge vérifié
+              <svg class="icon"><use href="#icon-arrow-right"></use></svg>
+            </button>
+          </div>
+          <div class="confidence-list">
+            <article>
+              <span>01</span>
+              <div>
+                <h3>Photos utiles</h3>
+                <p>Au moins trois images exploitables avant publication.</p>
+              </div>
+            </article>
+            <article>
+              <span>02</span>
+              <div>
+                <h3>Disponibilité lisible</h3>
+                <p>La dernière mise à jour reste visible sur chaque fiche.</p>
+              </div>
+            </article>
+            <article>
+              <span>03</span>
+              <div>
+                <h3>Signalement simple</h3>
+                <p>Une annonce douteuse peut être transmise à la modération.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section id="pro-view" class="view pro-view" aria-labelledby="pro-title" hidden>
+        <div class="shell pro-shell">
+          <header class="pro-header">
+            <div>
+              <button class="text-button pro-back" type="button" data-view-target="tenant">
+                <svg class="icon"><use href="#icon-arrow-left"></use></svg>
+                Retour aux annonces
+              </button>
+              <p class="eyebrow">Espace commissionnaire</p>
+              <h1 id="pro-title">Bonjour Patrick, vos biens avancent.</h1>
+              <p>Suivez les annonces visibles et répondez aux nouveaux leads pendant qu’ils sont encore chauds.</p>
+            </div>
+            <button class="button button-primary" type="button" data-toast="Le formulaire de publication sera la prochaine surface à prototyper.">
+              <svg class="icon"><use href="#icon-plus"></use></svg>
+              Nouvelle annonce
+            </button>
+          </header>
+
+          <div class="pro-stats" aria-label="Résumé de l'activité">
+            <article>
+              <span>Annonces visibles</span>
+              <strong>8</strong>
+              <small>2 à reconfirmer bientôt</small>
+            </article>
+            <article>
+              <span>Nouveaux leads</span>
+              <strong>14</strong>
+              <small>Depuis lundi</small>
+            </article>
+            <article>
+              <span>Délai de réponse</span>
+              <strong>38 min</strong>
+              <small>Votre médiane cette semaine</small>
+            </article>
+          </div>
+
+          <div class="pro-grid">
+            <section class="pro-panel" aria-labelledby="my-listings-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Inventaire</p>
+                  <h2 id="my-listings-title">Mes annonces</h2>
+                </div>
+                <button class="text-link" type="button" data-toast="Vue inventaire complète à venir.">Tout voir</button>
+              </div>
+              <div class="my-listings">
+                <article>
+                  <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=300" alt="" />
+                  <div>
+                    <h3>Appartement traversant à Gombe</h3>
+                    <p>$980 / mois · 2 chambres</p>
+                    <span class="status status-live">Visible</span>
+                  </div>
+                  <button class="icon-button" type="button" aria-label="Options de l'annonce" data-toast="Options de l'annonce">
+                    <svg class="icon"><use href="#icon-menu"></use></svg>
+                  </button>
+                </article>
+                <article>
+                  <img src="https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=300" alt="" />
+                  <div>
+                    <h3>Maison familiale près de Ma Campagne</h3>
+                    <p>$1 350 / mois · 3 chambres</p>
+                    <span class="status status-warning">À reconfirmer</span>
+                  </div>
+                  <button class="icon-button" type="button" aria-label="Options de l'annonce" data-toast="Options de l'annonce">
+                    <svg class="icon"><use href="#icon-menu"></use></svg>
+                  </button>
+                </article>
+                <article>
+                  <div class="listing-mini-empty"><svg class="icon"><use href="#icon-building"></use></svg></div>
+                  <div>
+                    <h3>Studio rénové à Limete</h3>
+                    <p>Photos à compléter avant envoi</p>
+                    <span class="status status-draft">Brouillon</span>
+                  </div>
+                  <button class="icon-button" type="button" aria-label="Options de l'annonce" data-toast="Options de l'annonce">
+                    <svg class="icon"><use href="#icon-menu"></use></svg>
+                  </button>
+                </article>
+              </div>
+            </section>
+
+            <section class="pro-panel lead-panel" aria-labelledby="lead-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">WhatsApp attribuable</p>
+                  <h2 id="lead-title">Derniers leads</h2>
+                </div>
+                <span class="live-dot">En direct</span>
+              </div>
+              <div class="lead-list">
+                <article>
+                  <span class="lead-avatar">CK</span>
+                  <div>
+                    <h3>Clarisse Kanku</h3>
+                    <p>Appartement traversant à Gombe</p>
+                  </div>
+                  <time>Il y a 12 min</time>
+                </article>
+                <article>
+                  <span class="lead-avatar">BM</span>
+                  <div>
+                    <h3>Blaise Mputu</h3>
+                    <p>Maison familiale près de Ma Campagne</p>
+                  </div>
+                  <time>Il y a 47 min</time>
+                </article>
+                <article>
+                  <span class="lead-avatar">JN</span>
+                  <div>
+                    <h3>Joëlle Ngoma</h3>
+                    <p>Appartement traversant à Gombe</p>
+                  </div>
+                  <time>Hier, 18:24</time>
+                </article>
+              </div>
+              <button class="button button-secondary button-full" type="button" data-toast="Vue détaillée des leads à venir.">
+                Voir tous les leads
+              </button>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <a class="brand" href="#" data-view-target="tenant" aria-label="Maison, accueil">
+          <span class="brand-mark">M</span>
+          <span class="brand-name">maison</span>
+        </a>
+        <p>Locations claires. Contacts utiles. Kinshasa d’abord.</p>
+        <button class="text-link" type="button" data-toast="Informations légales à venir.">À propos du prototype</button>
+      </div>
+    </footer>
+
+    <nav class="mobile-bottom-nav" aria-label="Navigation mobile">
+      <button class="is-active" type="button" data-view-target="tenant">
+        <svg class="icon"><use href="#icon-home"></use></svg>
+        <span>Explorer</span>
+      </button>
+      <button type="button" data-toast="Les favoris seront disponibles à la prochaine étape.">
+        <svg class="icon"><use href="#icon-heart"></use></svg>
+        <span>Favoris</span>
+      </button>
+      <button type="button" data-view-target="pro">
+        <svg class="icon"><use href="#icon-user"></use></svg>
+        <span>Espace pro</span>
+      </button>
+    </nav>
+
+    <aside class="detail-panel" id="detail-panel" aria-labelledby="detail-title" aria-hidden="true" inert>
+      <div class="detail-header">
+        <button class="icon-button" type="button" id="detail-close" aria-label="Fermer la fiche">
+          <svg class="icon"><use href="#icon-x"></use></svg>
+        </button>
+        <p>Fiche location</p>
+        <button class="icon-button" type="button" aria-label="Ajouter aux favoris" data-toast="Annonce ajoutée aux favoris.">
+          <svg class="icon"><use href="#icon-heart"></use></svg>
+        </button>
+      </div>
+      <div class="detail-body" id="detail-body"></div>
+    </aside>
+    <div class="page-scrim" id="page-scrim" hidden></div>
+
+    <dialog class="lead-dialog" id="lead-dialog">
+      <form method="dialog" class="lead-form" id="lead-form">
+        <div class="dialog-heading">
+          <span class="dialog-icon"><svg class="icon"><use href="#icon-message"></use></svg></span>
+          <button class="icon-button" type="button" id="lead-close" aria-label="Fermer">
+            <svg class="icon"><use href="#icon-x"></use></svg>
+          </button>
+        </div>
+        <p class="eyebrow">Avant de continuer</p>
+        <h2>Préparez votre contact WhatsApp.</h2>
+        <p class="dialog-copy">
+          Vos coordonnées permettent au commissionnaire d’identifier votre demande et à Maison
+          d’attribuer correctement le lead.
+        </p>
+        <label class="form-block">
+          <span>Votre nom</span>
+          <input type="text" name="name" placeholder="Ex. Aline Mbala" required />
+          <small>Utilisez le nom que vous donnez au commissionnaire.</small>
+        </label>
+        <label class="form-block">
+          <span>Numéro WhatsApp</span>
+          <input type="tel" name="phone" placeholder="+243 ..." required />
+          <small>Le numéro est utilisé uniquement pour cette mise en relation.</small>
+        </label>
+        <label class="consent-row">
+          <input type="checkbox" required />
+          <span>J’accepte que Maison crée une fiche lead pour transmettre ma demande.</span>
+        </label>
+        <button class="button button-primary button-full" type="submit">
+          <svg class="icon"><use href="#icon-message"></use></svg>
+          Continuer vers WhatsApp
+        </button>
+        <p class="dialog-note">Maison ne lit pas vos conversations WhatsApp.</p>
+      </form>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

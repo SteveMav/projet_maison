@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Votre compte - Maison{% endblock %}
+
+{% block content %}
+  <section class="surface-panel">
+    <p class="eyebrow">Espace protege</p>
+    <h1>Votre compte</h1>
+    <p class="lede">Vous etes connecte avec {{ request.user.email }}.</p>
+  </section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion Google annulee - Maison{% endblock %}
+
+{% block content %}
+  <section class="surface-panel" role="alert">
+    <p class="eyebrow">Connexion Google</p>
+    <h1>Connexion annulee</h1>
+    <p class="lede">La connexion Google a ete annulee. Vous pouvez reessayer ou utiliser votre adresse e-mail.</p>
+    <div class="action-row">
+      <a class="button button-primary" href="{% url 'accounts:login' %}">Utiliser votre adresse e-mail</a>
+      <a class="button button-secondary" href="{% url 'accounts:register' %}">Creer un compte</a>
+    </div>
+  </section>
+{% endblock %}

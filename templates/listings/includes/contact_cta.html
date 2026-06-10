@@ -1,0 +1,27 @@
+{% if listing.availability_status == "available" %}
+  <div class="contact-cta-wrapper">
+    <button
+      type="button"
+      class="button button-primary button-full contact-whatsapp-btn"
+      data-contact-whatsapp
+      data-listing-id="{{ listing.id }}"
+      data-user-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}"
+      data-id-required="{% if user.is_authenticated and not user.whatsapp_consent %}true{% else %}false{% endif %}"
+    >
+      Contacter sur WhatsApp
+    </button>
+    
+    <div id="handoff-error-cta" class="handoff-error-container" role="alert" aria-live="polite" style="display: none; margin-top: 0.5rem; padding: 0.75rem; border-radius: 4px; background-color: #fdf2f2; border: 1px solid #f8b4b4; color: #9b1c1c;">
+      <span class="error-icon" aria-hidden="true" style="margin-right: 0.25rem;">⚠️</span>
+      <span class="error-text" style="font-weight: 500;"></span>
+    </div>
+
+    <div id="handoff-success-cta" class="handoff-success-container" role="alert" aria-live="polite" style="display: none; margin-top: 0.5rem; padding: 0.75rem; border-radius: 4px; background-color: #f3faf7; border: 1px solid #def7ec; color: #03543f;">
+      <p class="success-message" style="margin: 0; font-weight: 500;">
+        <span class="success-icon" aria-hidden="true" style="margin-right: 0.25rem;">✓</span>
+        Votre demande de contact a été enregistrée. Si vous n'êtes pas redirigé automatiquement, 
+        <a id="handoff-fallback-link" href="#" class="fallback-link" target="_blank" style="text-decoration: underline; font-weight: bold; color: #046c4e;">cliquez ici pour ouvrir WhatsApp</a>.
+      </p>
+    </div>
+  </div>
+{% endif %}

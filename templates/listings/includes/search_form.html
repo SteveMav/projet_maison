@@ -1,0 +1,68 @@
+<form class="listing-filter-form" method="get" action="{% url 'listings:browse' %}" data-filter-form>
+  <div class="listing-filter-grid">
+    <div class="field">
+      <label for="{{ filter_form.commune.id_for_label }}">Commune</label>
+      <input
+        class="form-control"
+        type="text"
+        name="{{ filter_form.commune.html_name }}"
+        id="{{ filter_form.commune.id_for_label }}"
+        value="{{ filter_form.commune.value|default_if_none:'' }}"
+        autocomplete="address-level2"
+      >
+      {% for error in filter_form.commune.errors %}
+        <p class="field-error">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="field">
+      <label for="{{ filter_form.budget_min.id_for_label }}">Budget minimum</label>
+      <input
+        class="form-control"
+        type="number"
+        min="0"
+        inputmode="numeric"
+        name="{{ filter_form.budget_min.html_name }}"
+        id="{{ filter_form.budget_min.id_for_label }}"
+        value="{{ filter_form.budget_min.value|default_if_none:'' }}"
+      >
+      {% for error in filter_form.budget_min.errors %}
+        <p class="field-error">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="field">
+      <label for="{{ filter_form.budget_max.id_for_label }}">Budget maximum</label>
+      <input
+        class="form-control"
+        type="number"
+        min="0"
+        inputmode="numeric"
+        name="{{ filter_form.budget_max.html_name }}"
+        id="{{ filter_form.budget_max.id_for_label }}"
+        value="{{ filter_form.budget_max.value|default_if_none:'' }}"
+      >
+      {% for error in filter_form.budget_max.errors %}
+        <p class="field-error">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="field">
+      <label for="{{ filter_form.bedrooms_min.id_for_label }}">Chambres minimum</label>
+      <input
+        class="form-control"
+        type="number"
+        min="0"
+        inputmode="numeric"
+        name="{{ filter_form.bedrooms_min.html_name }}"
+        id="{{ filter_form.bedrooms_min.id_for_label }}"
+        value="{{ filter_form.bedrooms_min.value|default_if_none:'' }}"
+      >
+      {% for error in filter_form.bedrooms_min.errors %}
+        <p class="field-error">{{ error }}</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <button class="button button-primary listing-filter-submit" type="submit">Rechercher</button>
+</form>

@@ -1,0 +1,47 @@
+<article class="listing-card">
+  {% if is_preview %}
+  <div class="listing-card-link">
+  {% else %}
+  <a
+    class="listing-card-link"
+    href="{% url 'listings:detail' listing.pk %}"
+    aria-label="Voir l'annonce a {{ listing.commune }}, {{ listing.bedroom_count }} chambres"
+  >
+  {% endif %}
+    <div class="listing-card-media">
+      {% if listing.card_primary_photo %}
+        <img
+          class="listing-card-image"
+          src="{{ listing.card_primary_photo.image.url }}"
+          alt="{{ listing.card_photo_alt }}"
+          width="640"
+          height="420"
+          loading="{% if is_priority_image %}eager{% else %}lazy{% endif %}"
+        >
+      {% else %}
+        <div class="listing-card-placeholder" role="img" aria-label="Photo non disponible">
+          Photo non disponible
+        </div>
+      {% endif %}
+    </div>
+    <div class="listing-card-body">
+      <p class="listing-card-price">{{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }} / mois</p>
+      <div class="listing-card-meta">
+        <span>{{ listing.commune }}</span>
+        <span aria-hidden="true">-</span>
+        <span>{{ listing.bedroom_count }} chambres</span>
+      </div>
+      <p class="listing-card-freshness">Mis a jour le {{ listing.card_freshness_at|date:"d/m/Y" }}</p>
+      {% if listing.is_verified %}
+        <p class="listing-card-badge" aria-label="Verification Maison">
+          <span aria-hidden="true">✓</span>
+          <span>Verifiee</span>
+        </p>
+      {% endif %}
+    </div>
+  {% if is_preview %}
+  </div>
+  {% else %}
+  </a>
+  {% endif %}
+</article>

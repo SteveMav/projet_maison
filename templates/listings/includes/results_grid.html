@@ -1,0 +1,26 @@
+{% if listings %}
+  <div class="listing-grid">
+    {% for listing in listings %}
+      {% include "listings/includes/listing_card.html" with listing=listing is_priority_image=forloop.first only %}
+    {% endfor %}
+  </div>
+  {% if is_paginated %}
+    <nav class="pagination" aria-label="Pagination des annonces">
+      {% if page_obj.has_previous %}
+        <a class="pagination-link" href="{{ pagination_urls.previous }}">Precedent</a>
+      {% endif %}
+      <span class="pagination-status">Page {{ page_obj.number }} sur {{ paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a class="pagination-link" href="{{ pagination_urls.next }}">Suivant</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <p class="empty-state">
+    {% if active_filters %}
+      Aucune annonce ne correspond exactement.
+    {% else %}
+      Aucune annonce disponible pour le moment.
+    {% endif %}
+  </p>
+{% endif %}

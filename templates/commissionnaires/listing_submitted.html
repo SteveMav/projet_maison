@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Annonce envoyée - Maison{% endblock %}
+
+{% block content %}
+  <section class="surface-panel pro-panel max-w-[700px] mx-auto text-center">
+    <p class="eyebrow">Espace pro</p>
+    <h1>Annonce envoyée pour modération</h1>
+    
+    <div class="message-list mt-6 mb-6">
+      <div class="message text-left">
+        <p><strong>Félicitations !</strong> Votre annonce pour le logement situé à <strong>{{ listing.commune }}</strong> ({{ listing.monthly_price_amount }} USD / mois) a bien été enregistrée.</p>
+        <p class="mt-2">L'annonce est actuellement en cours de modération (<code>Envoyée pour modération</code>). L'équipe de Maison va vérifier les informations fournies ainsi que les photos avant de la rendre publique sur la plateforme.</p>
+        <p class="mt-2 text-sm text-secondary">Veuillez noter que le processus de vérification peut prendre quelques heures. Aucune mention de vérification ou garantie publique ne sera appliquée avant cette étape.</p>
+      </div>
+    </div>
+
+    <div class="auth-stack">
+      <a href="{% url 'commissionnaires:profile' %}" class="button button-primary min-h-[48px] flex items-center justify-center">
+        Retour à mon profil
+      </a>
+      <a href="{% url 'commissionnaires:listing_submit' %}" class="button button-google min-h-[48px] flex items-center justify-center flex-row">
+        Publier une autre annonce
+      </a>
+    </div>
+  </section>
+{% endblock %}

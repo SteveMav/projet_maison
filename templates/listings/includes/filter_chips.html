@@ -1,0 +1,14 @@
+{% if active_filter_chips %}
+  <nav class="filter-chips" aria-label="Filtres actifs" data-filter-chips>
+    {% for chip in active_filter_chips %}
+      <a class="filter-chip" href="{{ chip.url }}">
+        <span>{{ chip.label }}</span>
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Retirer ce filtre</span>
+      </a>
+    {% endfor %}
+    <a class="filter-clear-link" href="{{ clear_filters_url }}">Effacer les filtres</a>
+  </nav>
+{% else %}
+  <div data-filter-chips></div>
+{% endif %}

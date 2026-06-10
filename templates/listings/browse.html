@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Annonces recentes - Maison{% endblock %}
+{% block main_class %} listing-page-shell{% endblock %}
+
+{% block content %}
+  <section class="browse-page" aria-labelledby="browse-title">
+    <header class="browse-header">
+      <p class="eyebrow">Annonces recentes</p>
+      <h1 id="browse-title">Logements disponibles</h1>
+    </header>
+    {% include "listings/includes/search_form.html" %}
+    {% include "listings/includes/filter_chips.html" %}
+    <p
+      id="listing-result-count"
+      class="listing-result-count"
+      role="status"
+      aria-live="polite"
+      data-filter-count
+    >
+      {{ result_count_text }}
+    </p>
+    <div id="listing-results" data-filter-results aria-busy="false">
+      {% include "listings/includes/results_grid.html" %}
+    </div>
+  </section>
+
+  <dialog id="detail-drawer" class="detail-drawer" aria-label="Détail de l'annonce">
+  </dialog>
+{% endblock %}
+
+{% block scripts %}
+  <script defer src="{% static 'js/filters.js' %}"></script>
+  <script defer src="{% static 'js/listing-detail.js' %}"></script>
+  <script defer src="{% static 'js/lead-handoff.js' %}"></script>
+{% endblock %}
