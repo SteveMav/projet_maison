@@ -1,4 +1,8 @@
 <form class="listing-filter-form" method="get" action="{% url 'listings:browse' %}" data-filter-form>
+  <div class="listing-filter-intro">
+    <p class="listing-filter-title">Affiner la recherche</p>
+    <p class="listing-filter-help">Kinshasa est déjà la zone couverte. Cherchez plutôt par commune, budget et nombre de chambres.</p>
+  </div>
   <div class="listing-filter-grid">
     <div class="field">
       <label for="{{ filter_form.commune.id_for_label }}">Commune</label>
@@ -9,7 +13,10 @@
         id="{{ filter_form.commune.id_for_label }}"
         value="{{ filter_form.commune.value|default_if_none:'' }}"
         autocomplete="address-level2"
+        placeholder="Ex: Gombe, Ngaliema"
+        aria-describedby="{{ filter_form.commune.id_for_label }}_help"
       >
+      <p id="{{ filter_form.commune.id_for_label }}_help" class="field-help">Laissez vide pour voir toutes les annonces.</p>
       {% for error in filter_form.commune.errors %}
         <p class="field-error">{{ error }}</p>
       {% endfor %}
@@ -25,6 +32,7 @@
         name="{{ filter_form.budget_min.html_name }}"
         id="{{ filter_form.budget_min.id_for_label }}"
         value="{{ filter_form.budget_min.value|default_if_none:'' }}"
+        placeholder="200"
       >
       {% for error in filter_form.budget_min.errors %}
         <p class="field-error">{{ error }}</p>
@@ -41,6 +49,7 @@
         name="{{ filter_form.budget_max.html_name }}"
         id="{{ filter_form.budget_max.id_for_label }}"
         value="{{ filter_form.budget_max.value|default_if_none:'' }}"
+        placeholder="800"
       >
       {% for error in filter_form.budget_max.errors %}
         <p class="field-error">{{ error }}</p>
@@ -57,6 +66,7 @@
         name="{{ filter_form.bedrooms_min.html_name }}"
         id="{{ filter_form.bedrooms_min.id_for_label }}"
         value="{{ filter_form.bedrooms_min.value|default_if_none:'' }}"
+        placeholder="2"
       >
       {% for error in filter_form.bedrooms_min.errors %}
         <p class="field-error">{{ error }}</p>

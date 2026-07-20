@@ -1,4 +1,4 @@
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.db.models.functions import Coalesce
 
 from apps.commissionnaires.models import CommissionnaireProfile
@@ -43,7 +43,9 @@ def filter_public_listings(filters):
 
     commune = filters.get("commune")
     if commune:
-        queryset = queryset.filter(commune__iexact=commune)
+        queryset = queryset.filter(
+            Q(commune__icontains=commune) | Q(neighborhood__icontains=commune)
+        )
 
     budget_min = filters.get("budget_min")
     if budget_min is not None:

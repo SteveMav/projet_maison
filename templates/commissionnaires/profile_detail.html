@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
 {% block title %}Profil commissionnaire - Maison{% endblock %}
+{% block main_class %} pro-shell{% endblock %}
 
 {% block content %}
+  <section class="pro-hero">
+    <div>
+      <p class="eyebrow">Espace pro</p>
+      <h1>Profil commissionnaire</h1>
+      <p class="lede">Votre identité de contact est attachée aux annonces et aux demandes WhatsApp.</p>
+    </div>
+    <div class="action-row">
+      <a class="button button-primary" href="{% url 'commissionnaires:listing_submit' %}">Publier un bien</a>
+      <a class="button button-secondary" href="{% url 'commissionnaires:listing_inventory' %}">Mon inventaire</a>
+    </div>
+  </section>
+
   <section class="surface-panel pro-panel">
-    <p class="eyebrow">Espace pro</p>
-    <h1>Profil commissionnaire</h1>
     <dl class="profile-summary">
       <div>
         <dt>Nom affiche</dt>

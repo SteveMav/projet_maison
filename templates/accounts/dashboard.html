@@ -1,11 +1,52 @@
 {% extends "base.html" %}
 
 {% block title %}Votre compte - Maison{% endblock %}
+{% block main_class %} account-shell{% endblock %}
 
 {% block content %}
-  <section class="surface-panel">
-    <p class="eyebrow">Espace protege</p>
-    <h1>Votre compte</h1>
-    <p class="lede">Vous etes connecte avec {{ request.user.email }}.</p>
+  <section class="account-hero">
+    <div>
+      <p class="eyebrow">Espace protege</p>
+      <h1>Votre compte</h1>
+      <p class="lede">Vous etes connecte avec {{ request.user.email }}.</p>
+    </div>
+    {% if not is_whatsapp_ready %}
+      <a class="button button-primary" href="{% url 'accounts:phone_complete' %}">Completer WhatsApp</a>
+    {% else %}
+      <span class="status-chip status-chip-success">WhatsApp prêt</span>
+    {% endif %}
+  </section>
+
+  <section class="account-grid" aria-label="Actions principales">
+    <a class="account-action" href="{% url 'listings:browse' %}">
+      <span class="account-action-kicker">Locataire</span>
+      <strong>Explorer les logements</strong>
+      <span>Comparer les annonces disponibles et continuer vers WhatsApp.</span>
+    </a>
+    <a class="account-action" href="{% url 'commissionnaires:profile' %}">
+      <span class="account-action-kicker">Commissionnaire</span>
+      <strong>Gérer votre espace pro</strong>
+      <span>Profil, inventaire et publication depuis un seul endroit.</span>
+    </a>
+    <a class="account-action" href="{% url 'commissionnaires:listing_submit' %}">
+      <span class="account-action-kicker">Publication</span>
+      <strong>Publier un bien</strong>
+      <span>Préparer une annonce avec photos réelles et aperçu avant envoi.</span>
+    </a>
+  </section>
+
+  <section class="account-summary" aria-label="Résumé pro">
+    <div>
+      <span>Annonces</span>
+      <strong>{{ listing_count }}</strong>
+    </div>
+    <div>
+      <span>Leads attribués</span>
+      <strong>{{ lead_count }}</strong>
+    </div>
+    <div>
+      <span>Profil pro</span>
+      <strong>{% if commissionnaire_profile %}Actif{% else %}À créer{% endif %}</strong>
+    </div>
   </section>
 {% endblock %}

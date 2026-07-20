@@ -1,78 +1,77 @@
-<tr class="align-middle hover:bg-[var(--maison-surface-raised)] transition-colors duration-150" data-listing-id="{{ listing.id }}">
-  <td class="py-4 px-4">
-    <div class="flex items-center gap-3">
+<tr class="inventory-row" data-listing-id="{{ listing.id }}">
+  <td>
+    <div class="inventory-listing-cell">
       {% if listing.card_primary_photo %}
-        <img src="{{ listing.card_primary_photo.image.url }}" alt="{{ listing.card_photo_alt }}" class="w-12 h-12 object-cover rounded-[var(--maison-radius-sm)] border border-[var(--maison-border-strong)]">
+        <img class="inventory-thumb" src="{{ listing.card_primary_photo.image.url }}" alt="{{ listing.card_photo_alt }}">
       {% else %}
-        <div class="w-12 h-12 bg-[var(--maison-surface-soft)] border border-[var(--maison-border-strong)] rounded-[var(--maison-radius-sm)] flex items-center justify-center text-xs text-[var(--maison-ink-secondary)]">Pas d'image</div>
+        <div class="inventory-thumb inventory-thumb-empty">Photo</div>
       {% endif %}
       <div>
-        <span class="font-medium text-[var(--maison-ink-primary)] block">{{ listing.commune }}</span>
-        <span class="block text-xs text-[var(--maison-ink-secondary)]">ID: #{{ listing.id }}</span>
+        <span class="inventory-title">{{ listing.location_label }}</span>
+        <span class="inventory-subtitle">ID #{{ listing.id }} · {{ listing.property_type_label }}</span>
       </div>
     </div>
   </td>
-  <td class="py-4 px-4 font-semibold text-[var(--maison-ink-primary)]">
-    {{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }}
+  <td>
+    <strong>{{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }}</strong>
   </td>
-  <td class="py-4 px-4 text-[var(--maison-ink-primary)] font-medium">
-    {{ listing.bedroom_count }} ch.
+  <td>
+    <span>{{ listing.bedroom_count }} ch.</span>
+    <span class="inventory-muted">· {{ listing.bathroom_count }} sdb</span>
   </td>
-  <td class="py-4 px-4">
+  <td>
     {% if listing.availability_status == 'under_review' %}
-      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--maison-radius-full)] text-xs font-semibold bg-[var(--maison-surface-soft)] text-[var(--maison-ink-secondary)] border border-[var(--maison-border-strong)]" data-status-hook="under-review">
-        <span class="w-2 h-2 rounded-full bg-[var(--maison-ink-muted)]"></span>
-        <span>A l'etude</span>
+      <span class="status-chip status-chip-neutral" data-status-hook="under-review">
+        <span class="status-dot" aria-hidden="true"></span>
+        A l'etude
       </span>
     {% elif listing.availability_status == 'unavailable' %}
-      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--maison-radius-full)] text-xs font-semibold bg-[var(--maison-error-soft)] text-[var(--maison-error)] border border-[var(--maison-error)]" data-status-hook="unavailable">
-        <span class="w-2 h-2 rounded-full bg-[var(--maison-error)]"></span>
-        <span>Non disponible</span>
+      <span class="status-chip status-chip-error" data-status-hook="unavailable">
+        <span class="status-dot" aria-hidden="true"></span>
+        Non disponible
       </span>
     {% elif listing.freshness_state == 'reconfirm_soon' %}
-      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--maison-radius-full)] text-xs font-semibold bg-[var(--maison-warning-soft)] text-[var(--maison-warm)] border border-[var(--maison-warm)]" data-status-hook="reconfirm-soon">
-        <span class="inline-block text-[14px]">⚠️</span>
-        <span>A reconfirmer</span>
+      <span class="status-chip status-chip-warning" data-status-hook="reconfirm-soon">
+        <span class="status-dot" aria-hidden="true"></span>
+        A reconfirmer
       </span>
     {% else %}
-      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--maison-radius-full)] text-xs font-semibold bg-[var(--maison-trust-soft)] text-[var(--maison-accent)] border border-[var(--maison-trust-border)]" data-status-hook="available">
-        <span class="w-2 h-2 rounded-full bg-[var(--maison-accent)]"></span>
-        <span>Disponible</span>
+      <span class="status-chip status-chip-success" data-status-hook="available">
+        <span class="status-dot" aria-hidden="true"></span>
+        Disponible
       </span>
     {% endif %}
   </td>
-  <td class="py-4 px-4 text-xs text-[var(--maison-ink-secondary)] font-medium">
-    {{ listing.availability_changed_at|date:"d M Y" }}
+  <td>
+    <span class="inventory-muted">{{ listing.availability_changed_at|date:"d M Y" }}</span>
   </td>
-  <td class="py-4 px-4 text-right">
-    <div class="flex items-center justify-end gap-2">
-      {% if listing.availability_status != 'under_review' %}
-        {% if listing.availability_status == 'available' %}
-          <form method="post" action="{% url 'commissionnaires:listing_reconfirm' listing.id %}" class="inline">
-            {% csrf_token %}
-            <button type="submit" class="button {% if listing.freshness_state == 'reconfirm_soon' %}button-primary bg-[var(--maison-warm)] hover:bg-[var(--maison-warm)]! text-white{% else %}button-secondary{% endif %} min-h-[44px] px-3 flex items-center justify-center text-sm font-semibold rounded-[var(--maison-radius-sm)]" data-action-hook="reconfirm">
-              Reconfirmer
-            </button>
-          </form>
-        {% endif %}
-
-        <form method="post" action="{% url 'commissionnaires:listing_availability' listing.id %}" class="inline">
+  <td class="inventory-actions">
+    {% if listing.availability_status != 'under_review' %}
+      {% if listing.availability_status == 'available' %}
+        <form method="post" action="{% url 'commissionnaires:listing_reconfirm' listing.id %}">
           {% csrf_token %}
-          {% if listing.availability_status == 'available' %}
-            <input type="hidden" name="availability_status" value="unavailable">
-            <button type="submit" class="button button-secondary border-[var(--maison-error)]! text-[var(--maison-error)]! min-h-[44px] px-3 flex items-center justify-center text-sm font-semibold rounded-[var(--maison-radius-sm)]" data-action-hook="make-unavailable">
-              Rendre indisponible
-            </button>
-          {% else %}
-            <input type="hidden" name="availability_status" value="available">
-            <button type="submit" class="button button-primary min-h-[44px] px-3 flex items-center justify-center text-sm font-semibold rounded-[var(--maison-radius-sm)]" data-action-hook="make-available">
-              Rendre disponible
-            </button>
-          {% endif %}
+          <button type="submit" class="button button-secondary button-compact{% if listing.freshness_state == 'reconfirm_soon' %} button-warning{% endif %}" data-action-hook="reconfirm">
+            Reconfirmer
+          </button>
         </form>
-      {% else %}
-        <span class="text-xs text-[var(--maison-ink-secondary)] italic">En cours de validation</span>
       {% endif %}
-    </div>
+
+      <form method="post" action="{% url 'commissionnaires:listing_availability' listing.id %}">
+        {% csrf_token %}
+        {% if listing.availability_status == 'available' %}
+          <input type="hidden" name="availability_status" value="unavailable">
+          <button type="submit" class="button button-secondary button-compact button-danger" data-action-hook="make-unavailable">
+            Rendre indisponible
+          </button>
+        {% else %}
+          <input type="hidden" name="availability_status" value="available">
+          <button type="submit" class="button button-primary button-compact" data-action-hook="make-available">
+            Rendre disponible
+          </button>
+        {% endif %}
+      </form>
+    {% else %}
+      <span class="inventory-muted">En cours de validation</span>
+    {% endif %}
   </td>
 </tr>

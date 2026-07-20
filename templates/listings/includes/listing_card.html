@@ -1,4 +1,4 @@
-<article class="listing-card">
+<article class="listing-card" data-listing-card data-listing-id="{{ listing.pk|default:'preview' }}">
   {% if is_preview %}
   <div class="listing-card-link">
   {% else %}
@@ -23,25 +23,42 @@
           Photo non disponible
         </div>
       {% endif %}
+      {% if listing.is_verified %}
+        <span class="listing-card-photo-badge" aria-label="Annonce vérifiée">
+          <span aria-hidden="true">✓</span>
+          Vérifiée
+        </span>
+      {% endif %}
     </div>
     <div class="listing-card-body">
-      <p class="listing-card-price">{{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }} / mois</p>
-      <div class="listing-card-meta">
-        <span>{{ listing.commune }}</span>
-        <span aria-hidden="true">-</span>
-        <span>{{ listing.bedroom_count }} chambres</span>
+      <div class="listing-card-kicker">
+        <span>{{ listing.property_type_label|default:"Logement" }}</span>
+        <span aria-hidden="true">•</span>
+        <span>{{ listing.location_label|default:listing.commune }}</span>
       </div>
-      <p class="listing-card-freshness">Mis a jour le {{ listing.card_freshness_at|date:"d/m/Y" }}</p>
-      {% if listing.is_verified %}
-        <p class="listing-card-badge" aria-label="Verification Maison">
-          <span aria-hidden="true">✓</span>
-          <span>Verifiee</span>
-        </p>
-      {% endif %}
+      <p class="listing-card-price">{{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }} / mois</p>
+      <div class="listing-card-meta" aria-label="Caractéristiques principales">
+        <span>{{ listing.bedroom_count }} chambres</span>
+        <span aria-hidden="true">•</span>
+        <span>{{ listing.bathroom_count|default:1 }} salle{{ listing.bathroom_count|default:1|pluralize }} d'eau</span>
+      </div>
+      <div class="listing-card-footer">
+        <p class="listing-card-freshness">Mis a jour le {{ listing.card_freshness_at|date:"d/m/Y" }}</p>
+        <span class="listing-card-views">{{ listing.view_count|default:0 }} vue{{ listing.view_count|default:0|pluralize }}</span>
+      </div>
     </div>
   {% if is_preview %}
   </div>
   {% else %}
   </a>
+  <button
+    type="button"
+    class="favorite-button listing-card-favorite"
+    aria-label="Ajouter cette annonce aux favoris"
+    aria-pressed="false"
+    data-favorite-listing="{{ listing.pk }}"
+  >
+    <span aria-hidden="true">♡</span>
+  </button>
   {% endif %}
 </article>

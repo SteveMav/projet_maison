@@ -9,10 +9,23 @@
         <span aria-hidden="true">←</span> Retour aux résultats
       </a>
     {% endif %}
-    
-    <button type="button" class="detail-close-btn" data-close-drawer aria-label="Fermer">
-      <span aria-hidden="true">×</span>
-    </button>
+    <div class="detail-actions">
+      <button type="button" class="icon-button" data-share-listing aria-label="Partager l'annonce">
+        <span aria-hidden="true">↗</span>
+      </button>
+      <button
+        type="button"
+        class="icon-button favorite-button"
+        aria-label="Ajouter cette annonce aux favoris"
+        aria-pressed="false"
+        data-favorite-listing="{{ listing.pk }}"
+      >
+        <span aria-hidden="true">♡</span>
+      </button>
+      <button type="button" class="icon-button detail-close-btn" data-close-drawer aria-label="Fermer">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
   </header>
 
   <div class="detail-content-scroll">
@@ -31,21 +44,28 @@
 
     <div class="detail-body">
       <div class="detail-facts">
+        <p class="detail-location">{{ listing.location_label }}</p>
+        <h2 class="detail-title">{{ listing.property_type_label }} à {{ listing.commune }}</h2>
+        <span class="sr-only">Logement à {{ listing.commune }}</span>
         <p class="detail-price">{{ listing.monthly_price_amount }} {{ listing.monthly_price_currency }} / mois</p>
-        <h2 class="detail-title">Logement à {{ listing.commune }}</h2>
-        <div class="detail-meta">
-          <span class="detail-beds">{{ listing.bedroom_count }} chambres</span>
+        <div class="detail-meta" aria-label="Caractéristiques du logement">
+          <span>{{ listing.bedroom_count }} chambres</span>
+          <span>{{ listing.bathroom_count }} salle{{ listing.bathroom_count|pluralize }} d'eau</span>
+          <span>{{ listing.view_count }} vue{{ listing.view_count|pluralize }}</span>
         </div>
       </div>
 
       {% include "listings/includes/availability_block.html" %}
 
       {% if listing.is_verified %}
-        <div class="verification-box" role="note">
-          <p class="verification-text">
-            <span class="verification-icon" aria-hidden="true">✓</span>
-            Cette annonce a passé un contrôle supplémentaire. Le badge ne garantit pas le résultat d'une transaction hors ligne.
-          </p>
+        <div class="verification-box" role="note" aria-label="Signal de vérification Maison">
+          <span class="verification-icon" aria-hidden="true">✓</span>
+          <div>
+            <h3>Annonce vérifiée</h3>
+            <p class="verification-text">
+              Cette annonce a passé un contrôle supplémentaire. Le badge ne garantit pas le résultat d'une transaction hors ligne.
+            </p>
+          </div>
         </div>
       {% endif %}
 

@@ -23,6 +23,13 @@ class Listing(models.Model):
     class Currency(models.TextChoices):
         USD = "USD", "USD"
 
+    class PropertyType(models.TextChoices):
+        APARTMENT = "apartment", "Appartement"
+        HOUSE = "house", "Maison"
+        STUDIO = "studio", "Studio"
+        ROOM = "room", "Chambre"
+        OTHER = "other", "Autre"
+
     commissionnaire_profile = models.ForeignKey(
         "commissionnaires.CommissionnaireProfile",
         on_delete=models.PROTECT,
@@ -35,7 +42,17 @@ class Listing(models.Model):
         default=Currency.USD,
     )
     commune = models.CharField(max_length=120)
+    neighborhood = models.CharField(max_length=120, blank=True)
+    property_type = models.CharField(
+        max_length=32,
+        choices=PropertyType.choices,
+        default=PropertyType.APARTMENT,
+    )
     bedroom_count = models.PositiveSmallIntegerField()
+    bathroom_count = models.PositiveSmallIntegerField(default=1)
+    view_count = models.PositiveIntegerField(default=0)
+    is_verified = models.BooleanField(default=False)
+    verification_checked_at = models.DateTimeField(null=True, blank=True)
     description = models.TextField()
     availability_status = models.CharField(
         max_length=32,
@@ -64,12 +81,23 @@ class Listing(models.Model):
                 name="listing_status_changed_idx",
             ),
             models.Index(fields=["commune"], name="listing_commune_idx"),
+            models.Index(fields=["property_type"], name="listing_type_idx"),
             models.Index(fields=["bedroom_count"], name="listing_bedrooms_idx"),
             models.Index(fields=["monthly_price_amount"], name="listing_price_idx"),
         ]
 
     def __str__(self):
         return f"{self.commune} - {self.monthly_price_amount} {self.monthly_price_currency}"
+
+    @property
+    def location_label(self):
+        if self.neighborhood.strip():
+            return f"{self.neighborhood}, {self.commune}"
+        return self.commune
+
+    @property
+    def property_type_label(self):
+        return self.get_property_type_display()
 
     def get_primary_photo(self):
         explicit_primary = (

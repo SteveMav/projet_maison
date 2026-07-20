@@ -6,6 +6,8 @@ from apps.listings.validators import validate_listing_photo_upload
 
 
 class ListingFilterForm(forms.Form):
+    CITY_ALIASES = {"kinshasa", "ville de kinshasa"}
+
     commune = forms.CharField(
         label="Commune",
         required=False,
@@ -28,7 +30,10 @@ class ListingFilterForm(forms.Form):
     )
 
     def clean_commune(self):
-        return self.cleaned_data["commune"].strip()
+        commune = self.cleaned_data["commune"].strip()
+        if commune.lower() in self.CITY_ALIASES:
+            return ""
+        return commune
 
     def clean(self):
         cleaned_data = super().clean()
@@ -84,13 +89,19 @@ class ListingSubmissionForm(forms.ModelForm):
         fields = [
             "monthly_price_amount",
             "commune",
+            "neighborhood",
+            "property_type",
             "bedroom_count",
+            "bathroom_count",
             "description",
         ]
         labels = {
             "monthly_price_amount": "Prix mensuel en USD",
             "commune": "Commune",
+            "neighborhood": "Quartier",
+            "property_type": "Type de bien",
             "bedroom_count": "Nombre de chambres",
+            "bathroom_count": "Salles d'eau",
             "description": "Description",
         }
         widgets = {
@@ -107,10 +118,28 @@ class ListingSubmissionForm(forms.ModelForm):
                     "placeholder": "Ex: Gombe, Ngaliema...",
                 }
             ),
+            "neighborhood": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Ex: Ma Campagne, Socimat...",
+                }
+            ),
+            "property_type": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
             "bedroom_count": forms.NumberInput(
                 attrs={
                     "class": "form-control",
                     "placeholder": "Ex: 2",
+                    "min": "0",
+                }
+            ),
+            "bathroom_count": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Ex: 1",
                     "min": "0",
                 }
             ),
@@ -125,6 +154,10 @@ class ListingSubmissionForm(forms.ModelForm):
 
     def __init__(self, *args, has_draft_photos=False, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["property_type"].required = False
+        self.fields["property_type"].initial = Listing.PropertyType.APARTMENT
+        self.fields["bathroom_count"].required = False
+        self.fields["bathroom_count"].initial = 1
         if has_draft_photos:
             self.fields["photos"].required = False
 
@@ -139,6 +172,18 @@ class ListingSubmissionForm(forms.ModelForm):
         if not commune:
             raise forms.ValidationError("Ce champ est obligatoire.")
         return commune
+
+    def clean_neighborhood(self):
+        return self.cleaned_data.get("neighborhood", "").strip()
+
+    def clean_property_type(self):
+        return self.cleaned_data.get("property_type") or Listing.PropertyType.APARTMENT
+
+    def clean_bathroom_count(self):
+        count = self.cleaned_data.get("bathroom_count")
+        if count is None:
+            return 1
+        return count
 
     def clean_description(self):
         description = self.cleaned_data.get("description", "").strip()

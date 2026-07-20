@@ -16,11 +16,43 @@
     </nav>
   {% endif %}
 {% else %}
-  <p class="empty-state">
-    {% if active_filters %}
-      Aucune annonce ne correspond exactement.
-    {% else %}
-      Aucune annonce disponible pour le moment.
-    {% endif %}
-  </p>
+  <div class="empty-state rich-empty-state">
+    <div class="empty-state-copy">
+      <p class="empty-state-kicker">
+        {% if active_filters %}
+          Recherche filtrée
+        {% else %}
+          Catalogue en attente
+        {% endif %}
+      </p>
+      <p class="empty-state-title">
+      {% if active_filters %}
+        Aucune annonce ne correspond exactement.
+      {% else %}
+        Aucune annonce disponible pour le moment.
+      {% endif %}
+      </p>
+      <p>
+        {% if active_filters %}
+          Essayez une commune voisine, un budget plus large ou moins de chambres.
+        {% else %}
+          Le catalogue s’affichera ici dès que des logements seront validés et disponibles.
+        {% endif %}
+      </p>
+      <div class="empty-state-actions">
+        {% if active_filters %}
+          <a class="button button-secondary" href="{{ clear_filters_url }}">Voir toutes les annonces</a>
+        {% else %}
+          <a class="button button-primary" href="{% url 'commissionnaires:listing_submit' %}">Publier un bien</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="empty-state-suggestions" aria-label="Suggestions">
+      <p>Essais rapides</p>
+      <a href="{% url 'listings:browse' %}?commune=Gombe">Gombe</a>
+      <a href="{% url 'listings:browse' %}?commune=Ngaliema">Ngaliema</a>
+      <a href="{% url 'listings:browse' %}?budget_max=500">Moins de 500 USD</a>
+      <a href="{% url 'listings:browse' %}?bedrooms_min=2">2+ chambres</a>
+    </div>
+  </div>
 {% endif %}

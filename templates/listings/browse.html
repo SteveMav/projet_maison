@@ -6,12 +6,39 @@
 
 {% block content %}
   <section class="browse-page" aria-labelledby="browse-title">
-    <header class="browse-header">
-      <p class="eyebrow">Annonces recentes</p>
-      <h1 id="browse-title">Logements disponibles</h1>
+    <header class="browse-header browse-hero">
+      <div class="browse-hero-copy">
+        <p class="eyebrow">Annonces recentes</p>
+        <h1 id="browse-title">Logements disponibles à Kinshasa</h1>
+        <p class="lede">
+          Comparez vite les logements publiés avec photo, prix, commune,
+          nombre de chambres et fraîcheur de disponibilité.
+        </p>
+        <div class="browse-hero-actions" aria-label="Raccourcis de recherche">
+          <a class="quick-filter-link" href="{% url 'listings:browse' %}?commune=Gombe">Gombe</a>
+          <a class="quick-filter-link" href="{% url 'listings:browse' %}?commune=Ngaliema">Ngaliema</a>
+          <a class="quick-filter-link" href="{% url 'listings:browse' %}?bedrooms_min=2">2+ chambres</a>
+        </div>
+      </div>
+      <div class="browse-hero-metrics" aria-label="Résumé du catalogue">
+        <div>
+          <strong>{{ result_count }}</strong>
+          <span>résultat{{ result_count|pluralize }}</span>
+        </div>
+        <div>
+          <strong>3+</strong>
+          <span>photos requises</span>
+        </div>
+        <div>
+          <strong>WhatsApp</strong>
+          <span>avec contexte</span>
+        </div>
+      </div>
     </header>
-    {% include "listings/includes/search_form.html" %}
-    {% include "listings/includes/filter_chips.html" %}
+    <div class="browse-filter-surface">
+      {% include "listings/includes/search_form.html" %}
+      {% include "listings/includes/filter_chips.html" %}
+    </div>
     <p
       id="listing-result-count"
       class="listing-result-count"

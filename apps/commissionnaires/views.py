@@ -201,7 +201,10 @@ class ListingSubmissionView(WhatsAppPhoneRequiredMixin, View):
                 initial={
                     "monthly_price_amount": draft["monthly_price_amount"],
                     "commune": draft["commune"],
+                    "neighborhood": draft.get("neighborhood", ""),
+                    "property_type": draft.get("property_type", Listing.PropertyType.APARTMENT),
                     "bedroom_count": draft["bedroom_count"],
+                    "bathroom_count": draft.get("bathroom_count", 1),
                     "description": draft["description"],
                 },
                 has_draft_photos=True,
@@ -228,7 +231,10 @@ class ListingSubmissionView(WhatsAppPhoneRequiredMixin, View):
                 initial={
                     "monthly_price_amount": previous_draft["monthly_price_amount"],
                     "commune": previous_draft["commune"],
+                    "neighborhood": previous_draft.get("neighborhood", ""),
+                    "property_type": previous_draft.get("property_type", Listing.PropertyType.APARTMENT),
                     "bedroom_count": previous_draft["bedroom_count"],
+                    "bathroom_count": previous_draft.get("bathroom_count", 1),
                     "description": previous_draft["description"],
                 },
                 has_draft_photos=has_draft_photos,
@@ -273,7 +279,10 @@ class ListingSubmissionView(WhatsAppPhoneRequiredMixin, View):
                     "profile_id": profile.id,
                     "monthly_price_amount": form.cleaned_data["monthly_price_amount"],
                     "commune": form.cleaned_data["commune"],
+                    "neighborhood": form.cleaned_data.get("neighborhood", ""),
+                    "property_type": form.cleaned_data.get("property_type", Listing.PropertyType.APARTMENT),
                     "bedroom_count": form.cleaned_data["bedroom_count"],
+                    "bathroom_count": form.cleaned_data.get("bathroom_count", 1),
                     "description": form.cleaned_data["description"],
                     "photos": photo_paths,
                     "timestamp": timezone.now().isoformat(),
@@ -284,7 +293,10 @@ class ListingSubmissionView(WhatsAppPhoneRequiredMixin, View):
                 preview_listing = PreviewListing(
                     monthly_price_amount=draft_data["monthly_price_amount"],
                     commune=draft_data["commune"],
+                    neighborhood=draft_data["neighborhood"],
+                    property_type=draft_data["property_type"],
                     bedroom_count=draft_data["bedroom_count"],
+                    bathroom_count=draft_data["bathroom_count"],
                     description=draft_data["description"],
                     photo_url=photo_url,
                 )
@@ -320,7 +332,10 @@ class ListingSubmissionView(WhatsAppPhoneRequiredMixin, View):
                 data={
                     "monthly_price_amount": previous_draft["monthly_price_amount"],
                     "commune": previous_draft["commune"],
+                    "neighborhood": previous_draft.get("neighborhood", ""),
+                    "property_type": previous_draft.get("property_type", Listing.PropertyType.APARTMENT),
                     "bedroom_count": previous_draft["bedroom_count"],
+                    "bathroom_count": previous_draft.get("bathroom_count", 1),
                     "description": previous_draft["description"],
                 },
                 has_draft_photos=True,
@@ -390,13 +405,37 @@ class MockPhoto:
 class PreviewListing:
     monthly_price_currency = "USD"
     is_verified = False
+    view_count = 0
 
-    def __init__(self, monthly_price_amount, commune, bedroom_count, description, photo_url):
+    def __init__(
+        self,
+        monthly_price_amount,
+        commune,
+        neighborhood,
+        property_type,
+        bedroom_count,
+        bathroom_count,
+        description,
+        photo_url,
+    ):
         self.monthly_price_amount = monthly_price_amount
         self.commune = commune
+        self.neighborhood = neighborhood
+        self.property_type = property_type
         self.bedroom_count = bedroom_count
+        self.bathroom_count = bathroom_count
         self.description = description
         self.photo_url = photo_url
+
+    @property
+    def location_label(self):
+        if self.neighborhood:
+            return f"{self.neighborhood}, {self.commune}"
+        return self.commune
+
+    @property
+    def property_type_label(self):
+        return dict(Listing.PropertyType.choices).get(self.property_type, "Logement")
 
     @property
     def card_freshness_at(self):
@@ -481,7 +520,16 @@ class ListingInventoryView(WhatsAppPhoneRequiredMixin, View):
         return render(
             request,
             self.template_name,
-            {"listings": listings},
+            {
+                "profile": self.profile,
+                "listings": listings,
+                "listing_count": len(listings),
+                "lead_count": self.profile.leads.count(),
+                "available_count": sum(
+                    1 for listing in listings
+                    if listing.availability_status == Listing.AvailabilityStatus.AVAILABLE
+                ),
+            },
         )
 
 

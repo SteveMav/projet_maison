@@ -8,7 +8,8 @@
     </div>
     <div class="modal-body">
       <p class="modal-explanation">
-        Ces informations sont utilisées pour vous mettre en relation avec le Commissionnaire et attribuer votre demande.
+        Indiquez votre nom et votre numéro WhatsApp pour créer une demande attribuée à cette annonce.
+        Maison ne suit pas la conversation après l'ouverture de WhatsApp.
       </p>
       
       <form id="identification-form" method="POST" action="{% url 'accounts:identify' %}" novalidate>
@@ -76,13 +77,13 @@
         </div>
 
         <div class="privacy-reassurance">
-          <span class="lock-icon" aria-hidden="true">🔒</span>
+          <span class="lock-icon" aria-hidden="true">✓</span>
           Maison ne lit pas vos conversations WhatsApp.
         </div>
 
-        <div id="handoff-error-modal" class="handoff-error-container" role="alert" aria-live="polite" style="display: none; margin-top: 1rem; margin-bottom: 1rem; padding: 0.75rem; border-radius: 4px; background-color: #fdf2f2; border: 1px solid #f8b4b4; color: #9b1c1c;">
-          <span class="error-icon" aria-hidden="true" style="margin-right: 0.25rem;">⚠️</span>
-          <span class="error-text" style="font-weight: 500;"></span>
+        <div id="handoff-error-modal" class="handoff-error-container handoff-error" role="alert" aria-live="polite" hidden>
+          <span class="error-icon" aria-hidden="true">⚠️</span>
+          <span class="error-text"></span>
         </div>
 
         <div class="modal-footer">

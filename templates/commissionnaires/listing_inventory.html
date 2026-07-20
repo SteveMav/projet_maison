@@ -1,35 +1,48 @@
 {% extends "base.html" %}
 
 {% block title %}Mon inventaire - Maison{% endblock %}
+{% block main_class %} pro-shell{% endblock %}
 
 {% block content %}
-  <section class="surface-panel pro-panel max-w-[900px] mx-auto p-6 bg-[var(--maison-surface-raised)] border border-[var(--maison-border-hairline)] rounded-[var(--maison-radius-md)]">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-      <div>
-        <p class="eyebrow text-[var(--maison-warm)] text-xs font-semibold uppercase tracking-wider mb-1">Espace pro</p>
-        <h1 class="text-2xl font-bold text-[var(--maison-ink-primary)]">Mon inventaire</h1>
-      </div>
-      <div>
-        <a class="button button-primary min-h-[48px] px-6 inline-flex items-center justify-center font-semibold text-sm rounded-[var(--maison-radius-sm)] bg-[var(--maison-accent)] hover:bg-[var(--maison-accent-strong)] text-[var(--maison-inverse-ink)] transition-colors duration-150" href="{% url 'commissionnaires:listing_submit' %}">
-          + Publier un bien
-        </a>
-      </div>
+  <section class="pro-hero">
+    <div>
+      <p class="eyebrow">Espace pro</p>
+      <h1>Mon inventaire</h1>
+      <p class="lede">Gardez les logements disponibles, frais et attribuables avant que les locataires partent vers WhatsApp.</p>
     </div>
+    <a class="button button-primary" href="{% url 'commissionnaires:listing_submit' %}">Publier un bien</a>
+  </section>
 
+  <section class="pro-stats" aria-label="Résumé de l'inventaire">
+    <div>
+      <span>Annonces</span>
+      <strong>{{ listing_count }}</strong>
+    </div>
+    <div>
+      <span>Disponibles</span>
+      <strong>{{ available_count }}</strong>
+    </div>
+    <div>
+      <span>Leads</span>
+      <strong>{{ lead_count }}</strong>
+    </div>
+  </section>
+
+  <section class="surface-panel inventory-panel">
     {% if listings %}
-      <div class="overflow-x-auto border border-[var(--maison-border-hairline)] rounded-[var(--maison-radius-sm)]">
-        <table class="w-full text-left border-collapse bg-[var(--maison-surface-raised)]">
+      <div class="inventory-table-wrap">
+        <table class="inventory-table">
           <thead>
-            <tr class="border-b border-[var(--maison-border-strong)] bg-[var(--maison-surface-base)] text-[var(--maison-ink-secondary)] text-xs font-bold uppercase tracking-wider">
-              <th class="py-3 px-4">Bien</th>
-              <th class="py-3 px-4">Prix</th>
-              <th class="py-3 px-4">Chambres</th>
-              <th class="py-3 px-4">Statut</th>
-              <th class="py-3 px-4">Mise à jour</th>
-              <th class="py-3 px-4 text-right">Actions</th>
+            <tr>
+              <th>Bien</th>
+              <th>Prix</th>
+              <th>Détails</th>
+              <th>Statut</th>
+              <th>Mise à jour</th>
+              <th class="inventory-actions-heading">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-[var(--maison-border-hairline)] text-sm">
+          <tbody>
             {% for listing in listings %}
               {% include "commissionnaires/includes/inventory_row.html" %}
             {% endfor %}
@@ -37,11 +50,10 @@
         </table>
       </div>
     {% else %}
-      <div class="empty-state py-12 text-center border border-[var(--maison-border-hairline)] rounded-[var(--maison-radius-sm)] bg-[var(--maison-surface-base)]">
-        <p class="text-[var(--maison-ink-secondary)] mb-4 font-medium">Vous n'avez pas encore publié de logement.</p>
-        <a class="button button-primary min-h-[48px] px-6 inline-flex items-center justify-center font-semibold text-sm rounded-[var(--maison-radius-sm)] bg-[var(--maison-accent)] hover:bg-[var(--maison-accent-strong)] text-[var(--maison-inverse-ink)]" href="{% url 'commissionnaires:listing_submit' %}">
-          Créer une annonce
-        </a>
+      <div class="empty-state rich-empty-state">
+        <p class="empty-state-title">Vous n'avez pas encore publié de logement.</p>
+        <p>Ajoutez au moins trois photos réelles, un prix, une commune et les détails utiles pour le premier scan.</p>
+        <a class="button button-primary" href="{% url 'commissionnaires:listing_submit' %}">Créer une annonce</a>
       </div>
     {% endif %}
   </section>

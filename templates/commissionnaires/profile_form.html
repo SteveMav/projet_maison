@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}{{ title }} - Maison{% endblock %}
+{% block main_class %} pro-shell{% endblock %}
 
 {% block content %}
+  <section class="pro-hero">
+    <div>
+      <p class="eyebrow">Espace pro</p>
+      <h1>{{ title }}</h1>
+      <p class="lede">Ces informations seront visibles au moment du contact, pas comme une promesse de vérification.</p>
+    </div>
+  </section>
   <section class="surface-panel pro-panel">
-    <p class="eyebrow">Espace pro</p>
-    <h1>{{ title }}</h1>
     <form class="auth-form" method="post" novalidate>
       {% csrf_token %}
       <div class="field">

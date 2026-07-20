@@ -118,6 +118,15 @@ class AccountDashboardView(LoginRequiredMixin, TemplateView):
     login_url = settings.LOGIN_URL
     template_name = "accounts/dashboard.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = getattr(self.request.user, "commissionnaire_profile", None)
+        context["commissionnaire_profile"] = profile
+        context["listing_count"] = profile.listings.count() if profile else 0
+        context["lead_count"] = profile.leads.count() if profile else 0
+        context["is_whatsapp_ready"] = self.request.user.is_whatsapp_ready
+        return context
+
 
 class PhoneCompleteView(LoginRequiredMixin, FormView):
     form_class = WhatsAppPhoneCompletionForm

@@ -1,10 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
   const dialog = document.getElementById("detail-drawer");
   let lastTriggerElement = null;
+  const favoritesKey = "maison.favoriteListings";
 
   // Helper to check if screen is desktop
   function isDesktop() {
     return window.matchMedia("(min-width: 700px)").matches;
+  }
+
+  function readFavorites() {
+    try {
+      return new Set(JSON.parse(window.localStorage.getItem(favoritesKey) || "[]"));
+    } catch (error) {
+      return new Set();
+    }
+  }
+
+  function writeFavorites(favorites) {
+    window.localStorage.setItem(favoritesKey, JSON.stringify([...favorites]));
+  }
+
+  function refreshFavoriteButtons() {
+    const favorites = readFavorites();
+    document.querySelectorAll("[data-favorite-listing]").forEach((button) => {
+      const listingId = button.dataset.favoriteListing;
+      const isFavorite = favorites.has(listingId);
+      button.setAttribute("aria-pressed", isFavorite ? "true" : "false");
+      button.setAttribute(
+        "aria-label",
+        isFavorite ? "Retirer cette annonce des favoris" : "Ajouter cette annonce aux favoris"
+      );
+      const icon = button.querySelector("[aria-hidden='true']");
+      if (icon) {
+        icon.textContent = isFavorite ? "♥" : "♡";
+      }
+    });
   }
 
   // Intercept click on listing card links for desktop drawer view
@@ -35,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const html = await response.text();
         dialog.innerHTML = html;
+        refreshFavoriteButtons();
 
         // Apply inert to main and header
         const header = document.querySelector(".site-header");
@@ -99,6 +130,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  document.addEventListener("click", async (e) => {
+    const favoriteButton = e.target.closest("[data-favorite-listing]");
+    if (favoriteButton) {
+      e.preventDefault();
+      const favorites = readFavorites();
+      const listingId = favoriteButton.dataset.favoriteListing;
+      if (favorites.has(listingId)) {
+        favorites.delete(listingId);
+      } else {
+        favorites.add(listingId);
+      }
+      writeFavorites(favorites);
+      refreshFavoriteButtons();
+      return;
+    }
+
+    const shareButton = e.target.closest("[data-share-listing]");
+    if (shareButton) {
+      e.preventDefault();
+      const title = document.title || "Annonce Maison";
+      const url = window.location.href;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, url });
+        } catch (error) {
+          // User cancellation is not an error state for the interface.
+        }
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(url);
+        shareButton.dataset.copied = "true";
+        window.setTimeout(() => {
+          delete shareButton.dataset.copied;
+        }, 1800);
+      }
+    }
+  });
+
   // Gallery thumbnail click handler using event delegation
   document.addEventListener("click", (e) => {
     const thumb = e.target.closest("[data-gallery-thumb]");
@@ -124,4 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
       countLabel.textContent = `${thumb.dataset.index}/${allThumbs.length}`;
     }
   });
+
+  refreshFavoriteButtons();
 });

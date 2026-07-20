@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Maison{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}?v=20260611-polish">
   </head>
   <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
@@ -15,18 +15,25 @@
           <span class="brand-mark" aria-hidden="true">M</span>
           <span>maison</span>
         </a>
+        {% with namespace=request.resolver_match.namespace %}
+        <div class="site-nav-primary">
+          <a class="nav-link{% if namespace == 'listings' %} is-active{% endif %}" href="{% url 'listings:browse' %}"{% if namespace == 'listings' %} aria-current="page"{% endif %}>Explorer</a>
+          <a class="nav-link{% if namespace == 'commissionnaires' %} is-active{% endif %}" href="{% url 'commissionnaires:profile' %}"{% if namespace == 'commissionnaires' %} aria-current="page"{% endif %}>Espace pro</a>
+          <a class="nav-link nav-link-strong" href="{% url 'commissionnaires:listing_submit' %}">Publier un bien</a>
+        </div>
         <div class="nav-actions">
           {% if request.user.is_authenticated %}
-            <a class="nav-link" href="{% url 'accounts:dashboard' %}">Votre compte</a>
+            <a class="nav-link{% if namespace == 'accounts' %} is-active{% endif %}" href="{% url 'accounts:dashboard' %}"{% if namespace == 'accounts' %} aria-current="page"{% endif %}>Votre compte</a>
             <form method="post" action="{% url 'accounts:logout' %}">
               {% csrf_token %}
-              <button class="button button-secondary" type="submit">Se deconnecter</button>
+              <button class="button button-secondary" type="submit">Se déconnecter</button>
             </form>
           {% else %}
-            <a class="nav-link" href="{% url 'accounts:login' %}">Se connecter</a>
+            <a class="nav-link{% if namespace == 'accounts' %} is-active{% endif %}" href="{% url 'accounts:login' %}"{% if namespace == 'accounts' %} aria-current="page"{% endif %}>Se connecter</a>
             <a class="button button-primary" href="{% url 'accounts:register' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">Creer un compte</a>
           {% endif %}
         </div>
+        {% endwith %}
       </nav>
     </header>
     <main id="main" class="page-shell{% block main_class %}{% endblock %}">
@@ -39,6 +46,22 @@
       {% endif %}
       {% block content %}{% endblock %}
     </main>
+    {% with namespace=request.resolver_match.namespace %}
+    <nav class="mobile-tabbar" aria-label="Navigation mobile">
+      <a class="mobile-tabbar-item{% if namespace == 'listings' %} is-active{% endif %}" href="{% url 'listings:browse' %}"{% if namespace == 'listings' %} aria-current="page"{% endif %}>
+        <span class="mobile-tabbar-icon" aria-hidden="true"></span>
+        <span>Explorer</span>
+      </a>
+      <a class="mobile-tabbar-item" href="{% url 'listings:browse' %}#favoris">
+        <span class="mobile-tabbar-icon mobile-tabbar-icon-heart" aria-hidden="true"></span>
+        <span>Favoris</span>
+      </a>
+      <a class="mobile-tabbar-item{% if namespace == 'commissionnaires' %} is-active{% endif %}" href="{% url 'commissionnaires:profile' %}"{% if namespace == 'commissionnaires' %} aria-current="page"{% endif %}>
+        <span class="mobile-tabbar-icon mobile-tabbar-icon-pro" aria-hidden="true"></span>
+        <span>Espace pro</span>
+      </a>
+    </nav>
+    {% endwith %}
     {% block scripts %}{% endblock %}
   </body>
 </html>

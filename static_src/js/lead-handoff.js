@@ -17,6 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return cookieValue;
   }
 
+  function showStatus(element) {
+    if (!element) return;
+    element.hidden = false;
+    element.style.display = "";
+  }
+
+  function hideStatus(element) {
+    if (!element) return;
+    element.hidden = true;
+    element.style.display = "";
+  }
+
   // Event delegation to capture clicks on all WhatsApp buttons
   document.addEventListener("click", async (e) => {
     const button = e.target.closest("[data-contact-whatsapp]");
@@ -98,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Clear previous errors
     if (modalErrorContainer) {
-      modalErrorContainer.style.display = "none";
+      hideStatus(modalErrorContainer);
     }
     if (modalErrorText) {
       modalErrorText.textContent = "";
@@ -204,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Display error inside modal
       if (modalErrorContainer && modalErrorText) {
         modalErrorText.textContent = "Erreur : Une erreur est survenue lors de la validation. Veuillez réessayer.";
-        modalErrorContainer.style.display = "block";
+        showStatus(modalErrorContainer);
       } else {
         alert("Erreur : Une erreur est survenue lors de la validation. Veuillez réessayer.");
       }
@@ -221,9 +233,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalErrorText = modalErrorContainer ? modalErrorContainer.querySelector(".error-text") : null;
 
     // Hide any previous messages
-    if (ctaErrorContainer) ctaErrorContainer.style.display = "none";
-    if (ctaSuccessContainer) ctaSuccessContainer.style.display = "none";
-    if (modalErrorContainer) modalErrorContainer.style.display = "none";
+    hideStatus(ctaErrorContainer);
+    hideStatus(ctaSuccessContainer);
+    hideStatus(modalErrorContainer);
 
     // Keep track of original text of buttons
     const originalTexts = new Map();
@@ -277,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Set up fallback/success state
             if (ctaSuccessContainer && fallbackLink) {
               fallbackLink.href = data.whatsapp_url;
-              ctaSuccessContainer.style.display = "block";
+              showStatus(ctaSuccessContainer);
               fallbackLink.focus();
             }
             
@@ -304,10 +316,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isModalOpen && modalErrorContainer && modalErrorText) {
         modalErrorText.textContent = "Erreur : " + errorMessage;
-        modalErrorContainer.style.display = "block";
+        showStatus(modalErrorContainer);
       } else if (ctaErrorContainer && ctaErrorText) {
         ctaErrorText.textContent = "Erreur : " + errorMessage;
-        ctaErrorContainer.style.display = "block";
+        showStatus(ctaErrorContainer);
       } else {
         alert("Erreur : " + errorMessage);
       }
@@ -330,10 +342,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isModalOpen && modalErrorContainer && modalErrorText) {
         modalErrorText.textContent = "Erreur : " + errorMessage;
-        modalErrorContainer.style.display = "block";
+        showStatus(modalErrorContainer);
       } else if (ctaErrorContainer && ctaErrorText) {
         ctaErrorText.textContent = "Erreur : " + errorMessage;
-        ctaErrorContainer.style.display = "block";
+        showStatus(ctaErrorContainer);
       } else {
         alert("Erreur : " + errorMessage);
       }

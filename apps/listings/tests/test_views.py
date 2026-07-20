@@ -178,6 +178,33 @@ class PublicBrowseViewTests(TestCase):
         self.assertEqual(list(response.context["listings"]), [matching])
         self.assertEqual(response.context["result_count"], 1)
 
+    def test_city_alias_filter_keeps_catalogue_visible(self):
+        listing = self.create_listing(
+            availability_status=Listing.AvailabilityStatus.AVAILABLE,
+            commune="Ngaliema",
+        )
+
+        response = self.client.get(reverse("listings:browse"), {"commune": "Kinshasa"})
+
+        self.assertTrue(response.context["filter_form"].is_valid())
+        self.assertEqual(response.context["active_filters"], {})
+        self.assertEqual(list(response.context["listings"]), [listing])
+
+    def test_commune_filter_also_matches_neighborhood(self):
+        listing = self.create_listing(
+            availability_status=Listing.AvailabilityStatus.AVAILABLE,
+            commune="Ngaliema",
+            neighborhood="Ma Campagne",
+        )
+
+        response = self.client.get(
+            reverse("listings:browse"),
+            {"commune": "Campagne"},
+        )
+
+        self.assertTrue(response.context["filter_form"].is_valid())
+        self.assertEqual(list(response.context["listings"]), [listing])
+
     def test_invalid_filter_values_show_form_errors_without_crashing(self):
         available = self.create_listing(
             availability_status=Listing.AvailabilityStatus.AVAILABLE,
